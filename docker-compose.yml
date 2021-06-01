@@ -12,3 +12,5 @@ services:
       POSTGRES_PASSWORD: antonio
       POSTGRES_DB: bibliotecaapi
 
+volumes:
+  db_data:
