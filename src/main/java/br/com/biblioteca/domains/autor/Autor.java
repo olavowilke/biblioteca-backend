@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_autor")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Where(clause = "deleted_at IS NULL")
 public class Autor {
 
     @Id
