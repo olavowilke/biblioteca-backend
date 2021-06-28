@@ -4,6 +4,8 @@ import br.com.biblioteca.domains.autor.dto.AutorListaDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 public interface AutorRepository {
@@ -13,5 +15,7 @@ public interface AutorRepository {
     Autor save(Autor autor);
 
     Autor findById(UUID id);
+
+    List<Autor> saveAll(Collection<Autor> autores);
 
 }
