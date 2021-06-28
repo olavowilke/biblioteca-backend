@@ -1,0 +1,8 @@
+{
+  "autorId": "{{autorId}}",
+  "dataPublicacao": "{{dataPublicacao}}",
+  "editora": "{{editora}}",
+  "generoLiterario": "{{generoLiterario}}",
+  "titulo": "{{titulo}}",
+  "isbn": "{{isbn}}"
+}
