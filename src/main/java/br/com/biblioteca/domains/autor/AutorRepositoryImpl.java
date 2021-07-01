@@ -1,6 +1,7 @@
 package br.com.biblioteca.domains.autor;
 
 import br.com.biblioteca.domains.autor.dto.AutorListaDTO;
+import br.com.biblioteca.util.DropdownDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +40,11 @@ class AutorRepositoryImpl implements AutorRepository {
     @Override
     public Page<AutorListaDTO> findByPage(String filter, Pageable pageable) {
         return autorRepositoryJpa.findByPage(filter, pageable);
+    }
+
+    @Override
+    public List<DropdownDTO> findForDropdown() {
+        return autorRepositoryJpa.findForDropdown();
     }
 
 }

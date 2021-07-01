@@ -3,12 +3,14 @@ package br.com.biblioteca.domains.autor;
 import br.com.biblioteca.domains.autor.dto.AutorByIdDTO;
 import br.com.biblioteca.domains.autor.dto.AutorCriarAtualizarDTO;
 import br.com.biblioteca.domains.autor.dto.AutorListaDTO;
+import br.com.biblioteca.util.DropdownDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -42,6 +44,10 @@ public class AutorService {
         Autor autor = autorRepository.findById(id);
         autor.delete();
         autorRepository.save(autor);
+    }
+
+    public List<DropdownDTO> findForDropdown() {
+        return autorRepository.findForDropdown();
     }
 
 }
