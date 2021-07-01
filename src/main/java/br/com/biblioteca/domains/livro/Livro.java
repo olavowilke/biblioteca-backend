@@ -75,4 +75,8 @@ public class Livro {
         this.generoLiterario = livroAtualizarDTO.getGeneroLiterario();
     }
 
+    public UUID getAutorId() {
+        return autor.getId();
+    }
+
 }

@@ -3,6 +3,7 @@ package br.com.biblioteca.domains.autor;
 import br.com.biblioteca.domains.autor.dto.AutorByIdDTO;
 import br.com.biblioteca.domains.autor.dto.AutorCriarAtualizarDTO;
 import br.com.biblioteca.domains.autor.dto.AutorListaDTO;
+import br.com.biblioteca.util.DropdownDTO;
 import br.com.biblioteca.util.FilterPageable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,6 +35,16 @@ public class AutorController {
         return ResponseEntity.created(location).build();
     }
 
+    @GetMapping
+    public Page<AutorListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "") String filter, FilterPageable filterPageable) {
+        return autorService.findByPage(filter.toUpperCase(), filterPageable.listByPage());
+    }
+
+    @GetMapping("/{id}")
+    public AutorByIdDTO findById(@PathVariable("id") UUID id) {
+        return autorService.findById(id);
+    }
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") UUID id, @Valid @RequestBody AutorCriarAtualizarDTO autorCriarAtualizarDTO) {
@@ -45,14 +57,9 @@ public class AutorController {
         autorService.deleteById(id);
     }
 
-    @GetMapping
-    public Page<AutorListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "") String filter, FilterPageable filterPageable) {
-        return autorService.findByPage(filter.toUpperCase(), filterPageable.listByPage());
-    }
-
-    @GetMapping("/{id}")
-    public AutorByIdDTO findById(@PathVariable("id") UUID id) {
-        return autorService.findById(id);
+    @GetMapping("/lista")
+    public List<DropdownDTO> findForDropdown() {
+        return autorService.findForDropdown();
     }
 
 }

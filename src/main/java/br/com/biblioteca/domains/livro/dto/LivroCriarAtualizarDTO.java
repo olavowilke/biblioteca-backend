@@ -3,13 +3,10 @@ package br.com.biblioteca.domains.livro.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import org.hibernate.validator.constraints.NotBlank;
-
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import java.time.LocalDate;
-
 import java.util.UUID;
 
 @Getter

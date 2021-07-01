@@ -1,6 +1,7 @@
 package br.com.biblioteca.domains.autor;
 
 import br.com.biblioteca.domains.autor.dto.AutorListaDTO;
+import br.com.biblioteca.util.DropdownDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,5 +18,7 @@ public interface AutorRepository {
     Autor findById(UUID id);
 
     List<Autor> saveAll(Collection<Autor> autores);
+
+    List<DropdownDTO> findForDropdown();
 
 }
