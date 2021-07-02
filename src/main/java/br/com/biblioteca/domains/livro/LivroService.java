@@ -2,6 +2,8 @@ package br.com.biblioteca.domains.livro;
 
 import br.com.biblioteca.domains.autor.Autor;
 import br.com.biblioteca.domains.autor.AutorRepository;
+import br.com.biblioteca.domains.editora.Editora;
+import br.com.biblioteca.domains.editora.EditoraRepository;
 import br.com.biblioteca.domains.livro.dto.LivroByIdDTO;
 import br.com.biblioteca.domains.livro.dto.LivroCriarAtualizarDTO;
 import br.com.biblioteca.domains.livro.dto.LivroListaDTO;
@@ -20,6 +22,7 @@ public class LivroService {
 
     private final LivroRepository livroRepository;
     private final AutorRepository autorRepository;
+    private final EditoraRepository editoraRepository;
 
     public void deleteById(UUID id) {
         Livro livro = livroRepository.findById(id);
@@ -28,9 +31,9 @@ public class LivroService {
     }
 
     public Livro criar(LivroCriarAtualizarDTO livroCriarDTO) {
-        UUID autorId = livroCriarDTO.getAutorId();
-        Autor autor = autorRepository.findById(autorId);
-        Livro livro = new Livro(livroCriarDTO, autor);
+        Autor autor = autorRepository.findById(livroCriarDTO.getAutorId());
+        Editora editora = editoraRepository.findById(livroCriarDTO.getEditoraId());
+        Livro livro = new Livro(livroCriarDTO, autor, editora);
         return livroRepository.save(livro);
     }
 

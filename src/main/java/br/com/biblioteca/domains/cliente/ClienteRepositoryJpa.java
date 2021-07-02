@@ -18,4 +18,5 @@ interface ClienteRepositoryJpa extends JpaRepository<Cliente, UUID> {
             "WHERE UPPER(cliente.nome) LIKE %:filter% " +
             "OR cliente.cpf LIKE %:filter%")
     Page<ClienteListaDTO> findByPage(String filter, Pageable pageable);
+
 }

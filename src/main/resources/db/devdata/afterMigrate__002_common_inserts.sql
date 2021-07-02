@@ -13,8 +13,12 @@ INSERT INTO tb_cliente(id, nome, cpf, telefone_id, endereco_id, data_nascimento,
 ('3100be3a-9d80-423c-b16c-749ec749b5af', 'Victor Pietro', '61659915058', '2fc644fb-c098-49f1-a491-76cc6de92f6e', '356fc596-5587-4ecf-95a3-a178fc10f85f', '05-04-1995', CURRENT_TIMESTAMP, NULL, NULL),
 ('29006e7b-4d54-404a-902b-87364a4a59e8', 'Olavo Wilke', '24433917010', 'c58edfd3-3ac9-43bf-8947-92dd84189328', '3e6ecfc7-e7da-4eb2-9398-4b36337536a6', '05-08-1996', CURRENT_TIMESTAMP, NULL, NULL) ON CONFLICT DO NOTHING;
 
-INSERT INTO tb_livro(id, titulo, autor_id, data_publicacao, editora, genero_literario, isbn, created_at, updated_at, deleted_at) values
-('3b792c7a-c9bc-4e0d-8834-f3414a4ed3ad', 'Mein Kempf', '3404b937-e7f9-49bc-8230-da5f2b8c41f0', '1925-07-18', 'Eher Verlag', 'Doido', 'testeisbn', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL),
-('5882eecd-d5f0-4c78-8544-e8c778c1f229', 'O Capital', '411a5759-08b2-4b32-a9cf-a368a4e68e5c', '1867-09-14','Editora', 'Comédia', 'testeisbn', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL ),
-('79ecf4c4-bc61-4367-8ad4-10b60ab315ee', 'Como viver com testosterona baixa: um guia', 'bf5f2972-8d89-447d-8805-b8fea4051abd', '1969-03-08', 'LowT', 'Comédia',  'testeisbn', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL) ON CONFLICT DO NOTHING;
+INSERT INTO tb_editora(id, nome, created_at, updated_at, deleted_at) values
+('f5e9621e-a57f-48c6-83c4-96426e9d2004', 'Abril', CURRENT_TIMESTAMP, null, null),
+('508660f7-9a44-4060-a455-99e6db911089', 'Panini', CURRENT_TIMESTAMP, null, null),
+('3a7f98bc-19c9-493a-9447-48ae49963d0b', 'Globo', CURRENT_TIMESTAMP, null, null) ON CONFLICT DO NOTHING;
 
+INSERT INTO tb_livro(id, titulo, autor_id, data_publicacao, editora_id, genero_literario, isbn, created_at, updated_at, deleted_at) values
+('3b792c7a-c9bc-4e0d-8834-f3414a4ed3ad', 'Mein Kempf', '3404b937-e7f9-49bc-8230-da5f2b8c41f0', '1925-07-18', 'f5e9621e-a57f-48c6-83c4-96426e9d2004', 'Comédia', 'testeisbn', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL),
+('5882eecd-d5f0-4c78-8544-e8c778c1f229', 'O Capital', '411a5759-08b2-4b32-a9cf-a368a4e68e5c', '1867-09-14','508660f7-9a44-4060-a455-99e6db911089', 'Comédia', 'testeisbn', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL ),
+('79ecf4c4-bc61-4367-8ad4-10b60ab315ee', 'Como viver com testosterona baixa: um guia', 'bf5f2972-8d89-447d-8805-b8fea4051abd', '1969-03-08', '3a7f98bc-19c9-493a-9447-48ae49963d0b', 'Comédia',  'testeisbn', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL) ON CONFLICT DO NOTHING;

@@ -3,6 +3,7 @@ package br.com.biblioteca.domains.livro.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,9 +21,8 @@ public class LivroCriarAtualizarDTO {
     @NotNull
     private LocalDate dataPublicacao;
 
-    @NotBlank
-    @Size(max = 50)
-    private String editora;
+    @Valid
+    private UUID editoraId;
 
     @NotBlank
     @Size(max = 50)

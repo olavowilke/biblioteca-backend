@@ -1,6 +1,7 @@
 package br.com.biblioteca.domains.livro;
 
 import br.com.biblioteca.domains.autor.Autor;
+import br.com.biblioteca.domains.editora.Editora;
 import br.com.biblioteca.domains.livro.dto.LivroCriarAtualizarDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,9 +27,11 @@ public class Livro {
 
     private String titulo;
     private LocalDate dataPublicacao;
-    private String editora;
     private String generoLiterario;
     private String isbn;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Editora editora;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Autor autor;
@@ -44,17 +47,17 @@ public class Livro {
         this.id = UUID.randomUUID();
     }
 
-    public Livro(LivroCriarAtualizarDTO livroCriarAtualizarDTO, Autor autor) {
+    public Livro(LivroCriarAtualizarDTO livroCriarAtualizarDTO, Autor autor, Editora editora) {
         this();
         this.titulo = livroCriarAtualizarDTO.getTitulo();
         this.dataPublicacao = livroCriarAtualizarDTO.getDataPublicacao();
-        this.editora = livroCriarAtualizarDTO.getEditora();
+        this.editora = editora;
         this.generoLiterario = livroCriarAtualizarDTO.getGeneroLiterario();
         this.isbn = livroCriarAtualizarDTO.getIsbn();
         this.autor = autor;
     }
 
-    public Livro(String titulo, LocalDate dataPublicacao, String editora, String generoLiterario, String isbn, Autor autor) {
+    public Livro(String titulo, LocalDate dataPublicacao, Editora editora, String generoLiterario, String isbn, Autor autor) {
         this();
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
@@ -64,19 +67,22 @@ public class Livro {
         this.autor = autor;
     }
 
+    public void atualizar(LivroCriarAtualizarDTO livroAtualizarDTO) {
+        this.titulo = livroAtualizarDTO.getTitulo();
+        this.dataPublicacao = livroAtualizarDTO.getDataPublicacao();
+        this.generoLiterario = livroAtualizarDTO.getGeneroLiterario();
+    }
+
     public void delete() {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public void atualizar(LivroCriarAtualizarDTO livroAtualizarDTO) {
-        this.titulo = livroAtualizarDTO.getTitulo();
-        this.dataPublicacao = livroAtualizarDTO.getDataPublicacao();
-        this.editora = livroAtualizarDTO.getEditora();
-        this.generoLiterario = livroAtualizarDTO.getGeneroLiterario();
-    }
-
     public UUID getAutorId() {
         return autor.getId();
+    }
+
+    public UUID getEditoraId() {
+        return editora.getId();
     }
 
 }
