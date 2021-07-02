@@ -2,6 +2,8 @@ package br.com.biblioteca;
 
 import br.com.biblioteca.domains.autor.Autor;
 import br.com.biblioteca.domains.autor.AutorRepository;
+import br.com.biblioteca.domains.editora.Editora;
+import br.com.biblioteca.domains.editora.EditoraRepository;
 import br.com.biblioteca.domains.livro.Livro;
 import br.com.biblioteca.domains.livro.LivroRepository;
 import br.com.biblioteca.util.ResourceUtils;
@@ -25,15 +27,17 @@ public class LivroTest extends IntegrationTestConfiguration {
     private String livroJson;
     private Livro livro1, livro2;
     private Autor autor1, autor2;
-    private String livro1Id;
-    private String livro2Id;
-    private String autor1Id;
-    private String autor2Id;
+    private Editora editora1, editora2;
+    private String livro1Id, livro2Id;
+    private String autor1Id, autor2Id;
+    private String editora1Id, editora2Id;
 
     @Autowired
     private AutorRepository autorRepository;
     @Autowired
     private LivroRepository livroRepository;
+    @Autowired
+    private EditoraRepository editoraRepository;
 
     @Before
     public void setUp() {
@@ -49,16 +53,22 @@ public class LivroTest extends IntegrationTestConfiguration {
         this.autor1Id = autor1.getId().toString();
         this.autor2Id = autor2.getId().toString();
 
+        this.editora1 = new Editora("Panini");
+        this.editora2 = new Editora("Saraiva");
+        this.editora1Id = editora1.getId().toString();
+        this.editora2Id = editora2.getId().toString();
 
-        this.livro1 = new Livro("O triste fim de Policarpo Quaresma", LocalDate.of(1915, 1, 1), "Revista dos Tribunaes", "Romance", "28172874989", autor1);
-        this.livro2 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), "LEO ARRUDA INC", "Científico", "28172874989", autor2);
+        this.livro1 = new Livro("O triste fim de Policarpo Quaresma", LocalDate.of(1915, 1, 1), editora1, "Romance", "28172874989", autor1);
+        this.livro2 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora2, "Científico", "28172874989", autor2);
         this.livro1Id = livro1.getId().toString();
         this.livro2Id = livro2.getId().toString();
 
         List<Autor> autores = List.of(autor1, autor2);
+        List<Editora> editoras = List.of(editora1, editora2);
         List<Livro> livros = List.of(livro1, livro2);
 
         autorRepository.saveAll(autores);
+        editoraRepository.saveAll(editoras);
         livroRepository.saveAll(livros);
     }
 
@@ -83,17 +93,17 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("titulo"))
                 .body("$", hasKey("dataPublicacao"))
-                .body("$", hasKey("editora"))
                 .body("$", hasKey("generoLiterario"))
                 .body("$", hasKey("isbn"))
                 .body("$", hasKey("autorId"))
+                .body("$", hasKey("editoraId"))
                 .body("id", is(livro2Id))
                 .body("titulo", is("O triste fim da minha ereção"))
                 .body("dataPublicacao", is("2018-01-01"))
-                .body("editora", is("LEO ARRUDA INC"))
                 .body("generoLiterario", is("Científico"))
                 .body("isbn", is("28172874989"))
                 .body("autorId", is(autor2Id))
+                .body("editoraId", is(editora2Id))
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -101,9 +111,9 @@ public class LivroTest extends IntegrationTestConfiguration {
     public void cadastrarLivro_Retornando201Created() {
         String payload = livroJson
                 .replace("{{autorId}}", autor2Id)
+                .replace("{{editoraId}}", editora2Id)
                 .replace("{{titulo}}", "O triste fim da minha ereção")
                 .replace("{{dataPublicacao}}", "2018-01-01")
-                .replace("{{editora}}", "LEO ARRUDA INC")
                 .replace("{{generoLiterario}}", "Científico")
                 .replace("{{isbn}}", "28172874989");
 
@@ -126,17 +136,17 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("titulo"))
                 .body("$", hasKey("dataPublicacao"))
-                .body("$", hasKey("editora"))
                 .body("$", hasKey("generoLiterario"))
                 .body("$", hasKey("isbn"))
                 .body("$", hasKey("autorId"))
+                .body("$", hasKey("editoraId"))
                 .body("id", is(id))
                 .body("titulo", is("O triste fim da minha ereção"))
                 .body("dataPublicacao", is("2018-01-01"))
-                .body("editora", is("LEO ARRUDA INC"))
                 .body("generoLiterario", is("Científico"))
                 .body("isbn", is("28172874989"))
                 .body("autorId", is(autor2Id))
+                .body("editoraId", is(editora2Id))
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -154,9 +164,9 @@ public class LivroTest extends IntegrationTestConfiguration {
     public void atualizarLivro_Retornando204NoContent() {
         String payload = livroJson
                 .replace("{{autorId}}", autor2Id)
+                .replace("{{editoraId}}", editora2Id)
                 .replace("{{titulo}}", "O triste fim da minha ereção")
                 .replace("{{dataPublicacao}}", "2018-01-01")
-                .replace("{{editora}}", "LEO ARRUDA INC")
                 .replace("{{generoLiterario}}", "Romance")
                 .replace("{{isbn}}", "28172874989");
 
@@ -178,17 +188,17 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("titulo"))
                 .body("$", hasKey("dataPublicacao"))
-                .body("$", hasKey("editora"))
                 .body("$", hasKey("generoLiterario"))
                 .body("$", hasKey("isbn"))
                 .body("$", hasKey("autorId"))
+                .body("$", hasKey("editoraId"))
                 .body("id", is(livro2Id))
                 .body("titulo", is("O triste fim da minha ereção"))
                 .body("dataPublicacao", is("2018-01-01"))
-                .body("editora", is("LEO ARRUDA INC"))
                 .body("generoLiterario", is("Romance"))
                 .body("isbn", is("28172874989"))
                 .body("autorId", is(autor2Id))
+                .body("editoraId", is(editora2Id))
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -196,9 +206,9 @@ public class LivroTest extends IntegrationTestConfiguration {
     public void atualizarLivro_GeneroLiterarioVazio_400BadRequest() {
         String payload = livroJson
                 .replace("{{autorId}}", autor2Id)
+                .replace("{{editoraId}}", editora1Id)
                 .replace("{{titulo}}", "Dom casmurro")
                 .replace("{{dataPublicacao}}", "1983-04-03")
-                .replace("{{editora}}", "Livraria Garnier")
                 .replace("{{generoLiterario}}", "")
                 .replace("{{isbn}", "312312312312321");
 
@@ -213,7 +223,7 @@ public class LivroTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void findByPage_Retornando200OK() {
+    public void findByPage_QuandoParametroTitulo_Retornando200OK() {
         given()
                 .param("orderBy", "titulo")
                 .param("direction", "ASC")
@@ -227,34 +237,33 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("editora")))
                 .body("content", everyItem(hasKey("generoLiterario")))
-                .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("isbn")))
+                .body("content", everyItem(hasKey("autorNome")))
+                .body("content", everyItem(hasKey("editoraNome")))
                 .body("content[0].size()", is(7))
                 .body("content[0].id", is(livro2Id))
                 .body("content[0].titulo", is("O triste fim da minha ereção"))
                 .body("content[0].dataPublicacao", is("2018-01-01"))
-                .body("content[0].editora", is("LEO ARRUDA INC"))
                 .body("content[0].generoLiterario", is("Científico"))
-                .body("content[0].autorNome", is("Olavo Wilke"))
                 .body("content[0].isbn", is("28172874989"))
+                .body("content[0].autorNome", is("Olavo Wilke"))
+                .body("content[0].editoraNome", is("Saraiva"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro1Id))
                 .body("content[1].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[1].dataPublicacao", is("1915-01-01"))
-                .body("content[1].editora", is("Revista dos Tribunaes"))
                 .body("content[1].generoLiterario", is("Romance"))
-                .body("content[1].autorNome", is("Lima Barreto"))
                 .body("content[1].isbn", is("28172874989"))
-
+                .body("content[1].autorNome", is("Lima Barreto"))
+                .body("content[1].editoraNome", is("Panini"))
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
     public void findByPage_QuandoParametroEditora_Retornando200OK() {
         given()
-                .param("orderBy", "editora")
+                .param("orderBy", "editora.nome")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -266,27 +275,26 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("editora")))
                 .body("content", everyItem(hasKey("generoLiterario")))
-                .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("isbn")))
+                .body("content", everyItem(hasKey("autorNome")))
+                .body("content", everyItem(hasKey("editoraNome")))
                 .body("content[0].size()", is(7))
-                .body("content[0].id", is(livro2Id))
-                .body("content[0].titulo", is("O triste fim da minha ereção"))
-                .body("content[0].dataPublicacao", is("2018-01-01"))
-                .body("content[0].editora", is("LEO ARRUDA INC"))
-                .body("content[0].generoLiterario", is("Científico"))
-                .body("content[0].autorNome", is("Olavo Wilke"))
+                .body("content[0].id", is(livro1Id))
+                .body("content[0].titulo", is("O triste fim de Policarpo Quaresma"))
+                .body("content[0].dataPublicacao", is("1915-01-01"))
                 .body("content[0].isbn", is("28172874989"))
+                .body("content[0].generoLiterario", is("Romance"))
+                .body("content[0].autorNome", is("Lima Barreto"))
+                .body("content[0].editoraNome", is("Panini"))
                 .body("content[1].size()", is(7))
-                .body("content[1].id", is(livro1Id))
-                .body("content[1].titulo", is("O triste fim de Policarpo Quaresma"))
-                .body("content[1].dataPublicacao", is("1915-01-01"))
-                .body("content[1].editora", is("Revista dos Tribunaes"))
-                .body("content[1].generoLiterario", is("Romance"))
-                .body("content[1].autorNome", is("Lima Barreto"))
+                .body("content[1].id", is(livro2Id))
+                .body("content[1].titulo", is("O triste fim da minha ereção"))
+                .body("content[1].dataPublicacao", is("2018-01-01"))
+                .body("content[1].generoLiterario", is("Científico"))
                 .body("content[1].isbn", is("28172874989"))
-
+                .body("content[1].autorNome", is("Olavo Wilke"))
+                .body("content[1].editoraNome", is("Saraiva"))
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -305,26 +313,26 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("editora")))
                 .body("content", everyItem(hasKey("generoLiterario")))
-                .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("isbn")))
-                .body("content[0].id", is(livro2Id))
+                .body("content", everyItem(hasKey("autorNome")))
+                .body("content", everyItem(hasKey("editoraNome")))
                 .body("content[0].size()", is(7))
+                .body("content[0].id", is(livro2Id))
                 .body("content[0].titulo", is("O triste fim da minha ereção"))
                 .body("content[0].dataPublicacao", is("2018-01-01"))
-                .body("content[0].editora", is("LEO ARRUDA INC"))
                 .body("content[0].generoLiterario", is("Científico"))
-                .body("content[0].autorNome", is("Olavo Wilke"))
                 .body("content[0].isbn", is("28172874989"))
+                .body("content[0].autorNome", is("Olavo Wilke"))
+                .body("content[0].editoraNome", is("Saraiva"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro1Id))
                 .body("content[1].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[1].dataPublicacao", is("1915-01-01"))
-                .body("content[1].editora", is("Revista dos Tribunaes"))
                 .body("content[1].generoLiterario", is("Romance"))
-                .body("content[1].autorNome", is("Lima Barreto"))
                 .body("content[1].isbn", is("28172874989"))
+                .body("content[1].autorNome", is("Lima Barreto"))
+                .body("content[1].editoraNome", is("Panini"))
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -343,26 +351,26 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("editora")))
                 .body("content", everyItem(hasKey("generoLiterario")))
-                .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("isbn")))
+                .body("content", everyItem(hasKey("autorNome")))
+                .body("content", everyItem(hasKey("editoraNome")))
                 .body("content[0].size()", is(7))
                 .body("content[0].id", is(livro1Id))
                 .body("content[0].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[0].dataPublicacao", is("1915-01-01"))
-                .body("content[0].editora", is("Revista dos Tribunaes"))
                 .body("content[0].generoLiterario", is("Romance"))
-                .body("content[0].autorNome", is("Lima Barreto"))
                 .body("content[0].isbn", is("28172874989"))
+                .body("content[0].autorNome", is("Lima Barreto"))
+                .body("content[0].editoraNome", is("Panini"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro2Id))
                 .body("content[1].titulo", is("O triste fim da minha ereção"))
                 .body("content[1].dataPublicacao", is("2018-01-01"))
-                .body("content[1].editora", is("LEO ARRUDA INC"))
                 .body("content[1].generoLiterario", is("Científico"))
-                .body("content[1].autorNome", is("Olavo Wilke"))
                 .body("content[1].isbn", is("28172874989"))
+                .body("content[1].autorNome", is("Olavo Wilke"))
+                .body("content[1].editoraNome", is("Saraiva"))
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -381,26 +389,26 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("editora")))
                 .body("content", everyItem(hasKey("generoLiterario")))
-                .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("isbn")))
+                .body("content", everyItem(hasKey("autorNome")))
+                .body("content", everyItem(hasKey("editoraNome")))
                 .body("content[0].size()", is(7))
                 .body("content[0].id", is(livro1Id))
                 .body("content[0].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[0].dataPublicacao", is("1915-01-01"))
-                .body("content[0].editora", is("Revista dos Tribunaes"))
                 .body("content[0].generoLiterario", is("Romance"))
-                .body("content[0].autorNome", is("Lima Barreto"))
                 .body("content[0].isbn", is("28172874989"))
+                .body("content[0].editoraNome", is("Panini"))
+                .body("content[0].autorNome", is("Lima Barreto"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro2Id))
                 .body("content[1].titulo", is("O triste fim da minha ereção"))
                 .body("content[1].dataPublicacao", is("2018-01-01"))
-                .body("content[1].editora", is("LEO ARRUDA INC"))
                 .body("content[1].generoLiterario", is("Científico"))
-                .body("content[1].autorNome", is("Olavo Wilke"))
                 .body("content[1].isbn", is("28172874989"))
+                .body("content[1].editoraNome", is("Saraiva"))
+                .body("content[1].autorNome", is("Olavo Wilke"))
                 .statusCode(HttpStatus.OK.value());
     }
 

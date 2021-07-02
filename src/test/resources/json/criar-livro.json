@@ -1,7 +1,7 @@
 {
   "autorId": "{{autorId}}",
   "dataPublicacao": "{{dataPublicacao}}",
-  "editora": "{{editora}}",
+  "editoraId": "{{editoraId}}",
   "generoLiterario": "{{generoLiterario}}",
   "titulo": "{{titulo}}",
   "isbn": "{{isbn}}"
