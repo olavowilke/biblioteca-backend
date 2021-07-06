@@ -2,6 +2,7 @@ package br.com.biblioteca.domains.livro;
 
 import br.com.biblioteca.domains.autor.Autor;
 import br.com.biblioteca.domains.editora.Editora;
+import br.com.biblioteca.domains.genero_literario.GeneroLiterario;
 import br.com.biblioteca.domains.livro.dto.LivroCriarAtualizarDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,11 +28,13 @@ public class Livro {
 
     private String titulo;
     private LocalDate dataPublicacao;
-    private String generoLiterario;
     private String isbn;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Editora editora;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private GeneroLiterario generoLiterario;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Autor autor;
@@ -47,17 +50,17 @@ public class Livro {
         this.id = UUID.randomUUID();
     }
 
-    public Livro(LivroCriarAtualizarDTO livroCriarAtualizarDTO, Autor autor, Editora editora) {
+    public Livro(LivroCriarAtualizarDTO livroCriarAtualizarDTO, Autor autor, Editora editora, GeneroLiterario generoLiterario) {
         this();
         this.titulo = livroCriarAtualizarDTO.getTitulo();
         this.dataPublicacao = livroCriarAtualizarDTO.getDataPublicacao();
         this.editora = editora;
-        this.generoLiterario = livroCriarAtualizarDTO.getGeneroLiterario();
+        this.generoLiterario = generoLiterario;
         this.isbn = livroCriarAtualizarDTO.getIsbn();
         this.autor = autor;
     }
 
-    public Livro(String titulo, LocalDate dataPublicacao, Editora editora, String generoLiterario, String isbn, Autor autor) {
+    public Livro(String titulo, LocalDate dataPublicacao, Editora editora, GeneroLiterario generoLiterario, String isbn, Autor autor) {
         this();
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
@@ -70,7 +73,6 @@ public class Livro {
     public void atualizar(LivroCriarAtualizarDTO livroAtualizarDTO) {
         this.titulo = livroAtualizarDTO.getTitulo();
         this.dataPublicacao = livroAtualizarDTO.getDataPublicacao();
-        this.generoLiterario = livroAtualizarDTO.getGeneroLiterario();
     }
 
     public void delete() {
@@ -83,6 +85,10 @@ public class Livro {
 
     public UUID getEditoraId() {
         return editora.getId();
+    }
+
+    public UUID getGeneroLiterarioId() {
+        return generoLiterario.getId();
     }
 
 }

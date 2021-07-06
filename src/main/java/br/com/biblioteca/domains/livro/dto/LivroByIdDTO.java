@@ -15,7 +15,7 @@ public class LivroByIdDTO {
     private String titulo;
     private LocalDate dataPublicacao;
     private UUID editoraId;
-    private String generoLiterario;
+    private UUID generoLiterarioId;
     private String isbn;
     private UUID autorId;
 
@@ -23,9 +23,9 @@ public class LivroByIdDTO {
         this.id = livro.getId();
         this.titulo = livro.getTitulo();
         this.dataPublicacao = livro.getDataPublicacao();
-        this.editoraId = livro.getEditoraId();
-        this.generoLiterario = livro.getGeneroLiterario();
         this.isbn = livro.getIsbn();
+        this.editoraId = livro.getEditoraId();
+        this.generoLiterarioId = livro.getGeneroLiterarioId();
         this.autorId = livro.getAutorId();
     }
 
