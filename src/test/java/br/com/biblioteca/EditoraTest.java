@@ -62,7 +62,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("nome"))
                 .body("id", is(id))
-                .body("titulo", is("Abril"))
+                .body("nome", is("Abril"))
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -92,11 +92,11 @@ public class EditoraTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("nome")))
                 .body("content[0].size()", is(2))
-                .body("content[0].id", is(editora1.getId().toString()))
-                .body("content[0].nome", is("Panini"))
+                .body("content[0].id", is(editora2.getId().toString()))
+                .body("content[0].nome", is("Abril"))
                 .body("content[1].size()", is(2))
-                .body("content[1].id", is(editora2.getId().toString()))
-                .body("content[1].nome", is("Abril"))
+                .body("content[1].id", is(editora1.getId().toString()))
+                .body("content[1].nome", is("Panini"))
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -139,7 +139,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
                 .post();
         response.then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("TAMANHO DEVE SER ENTRE 0 E 50"));
+                .body("mensagem", is("O CAMPO NOME NÃO DEVE CONTER MAIS DO QUE 50 CARACTERES."));
     }
 
 }
