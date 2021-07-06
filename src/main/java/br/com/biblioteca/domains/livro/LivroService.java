@@ -4,6 +4,8 @@ import br.com.biblioteca.domains.autor.Autor;
 import br.com.biblioteca.domains.autor.AutorRepository;
 import br.com.biblioteca.domains.editora.Editora;
 import br.com.biblioteca.domains.editora.EditoraRepository;
+import br.com.biblioteca.domains.genero_literario.GeneroLiterario;
+import br.com.biblioteca.domains.genero_literario.GeneroLiterarioRepository;
 import br.com.biblioteca.domains.livro.dto.LivroByIdDTO;
 import br.com.biblioteca.domains.livro.dto.LivroCriarAtualizarDTO;
 import br.com.biblioteca.domains.livro.dto.LivroListaDTO;
@@ -23,6 +25,7 @@ public class LivroService {
     private final LivroRepository livroRepository;
     private final AutorRepository autorRepository;
     private final EditoraRepository editoraRepository;
+    private final GeneroLiterarioRepository generoLiterarioRepository;
 
     public void deleteById(UUID id) {
         Livro livro = livroRepository.findById(id);
@@ -33,7 +36,8 @@ public class LivroService {
     public Livro criar(LivroCriarAtualizarDTO livroCriarDTO) {
         Autor autor = autorRepository.findById(livroCriarDTO.getAutorId());
         Editora editora = editoraRepository.findById(livroCriarDTO.getEditoraId());
-        Livro livro = new Livro(livroCriarDTO, autor, editora);
+        GeneroLiterario generoLiterario = generoLiterarioRepository.findById(livroCriarDTO.getGeneroLiterarioId());
+        Livro livro = new Livro(livroCriarDTO, autor, editora, generoLiterario);
         return livroRepository.save(livro);
     }
 

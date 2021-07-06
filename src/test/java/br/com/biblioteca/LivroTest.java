@@ -4,6 +4,8 @@ import br.com.biblioteca.domains.autor.Autor;
 import br.com.biblioteca.domains.autor.AutorRepository;
 import br.com.biblioteca.domains.editora.Editora;
 import br.com.biblioteca.domains.editora.EditoraRepository;
+import br.com.biblioteca.domains.genero_literario.GeneroLiterario;
+import br.com.biblioteca.domains.genero_literario.GeneroLiterarioRepository;
 import br.com.biblioteca.domains.livro.Livro;
 import br.com.biblioteca.domains.livro.LivroRepository;
 import br.com.biblioteca.util.ResourceUtils;
@@ -28,14 +30,18 @@ public class LivroTest extends IntegrationTestConfiguration {
     private Livro livro1, livro2;
     private Autor autor1, autor2;
     private Editora editora1, editora2;
+    private GeneroLiterario generoLiterario1, generoLiterario2;
     private String livro1Id, livro2Id;
     private String autor1Id, autor2Id;
     private String editora1Id, editora2Id;
+    private String generoLiterario1Id, generoLiterario2Id;
 
     @Autowired
     private AutorRepository autorRepository;
     @Autowired
     private LivroRepository livroRepository;
+    @Autowired
+    private GeneroLiterarioRepository generoLiterarioRepository;
     @Autowired
     private EditoraRepository editoraRepository;
 
@@ -48,6 +54,11 @@ public class LivroTest extends IntegrationTestConfiguration {
     }
 
     private void prepararDados() {
+        this.generoLiterario1 = new GeneroLiterario("Romance");
+        this.generoLiterario2 = new GeneroLiterario("Aventura");
+        this.generoLiterario1Id = generoLiterario1.getId().toString();
+        this.generoLiterario2Id = generoLiterario2.getId().toString();
+
         this.autor1 = new Autor("Lima Barreto", "Brasileiro", LocalDate.of(1881, 5, 13));
         this.autor2 = new Autor("Olavo Wilke", "Brasileiro", LocalDate.of(1996, 8, 1));
         this.autor1Id = autor1.getId().toString();
@@ -58,17 +69,19 @@ public class LivroTest extends IntegrationTestConfiguration {
         this.editora1Id = editora1.getId().toString();
         this.editora2Id = editora2.getId().toString();
 
-        this.livro1 = new Livro("O triste fim de Policarpo Quaresma", LocalDate.of(1915, 1, 1), editora1, "Romance", "28172874989", autor1);
-        this.livro2 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora2, "Científico", "28172874989", autor2);
+        this.livro1 = new Livro("O triste fim de Policarpo Quaresma", LocalDate.of(1915, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
+        this.livro2 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora2, generoLiterario2, "28172874989", autor2);
         this.livro1Id = livro1.getId().toString();
         this.livro2Id = livro2.getId().toString();
 
         List<Autor> autores = List.of(autor1, autor2);
         List<Editora> editoras = List.of(editora1, editora2);
         List<Livro> livros = List.of(livro1, livro2);
+        List<GeneroLiterario> generosLiterarios = List.of(generoLiterario1, generoLiterario2);
 
         autorRepository.saveAll(autores);
         editoraRepository.saveAll(editoras);
+        generoLiterarioRepository.saveAll(generosLiterarios);
         livroRepository.saveAll(livros);
     }
 
@@ -93,15 +106,15 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("titulo"))
                 .body("$", hasKey("dataPublicacao"))
-                .body("$", hasKey("generoLiterario"))
                 .body("$", hasKey("isbn"))
+                .body("$", hasKey("generoLiterarioId"))
                 .body("$", hasKey("autorId"))
                 .body("$", hasKey("editoraId"))
                 .body("id", is(livro2Id))
                 .body("titulo", is("O triste fim da minha ereção"))
                 .body("dataPublicacao", is("2018-01-01"))
-                .body("generoLiterario", is("Científico"))
                 .body("isbn", is("28172874989"))
+                .body("generoLiterarioId", is(generoLiterario2Id))
                 .body("autorId", is(autor2Id))
                 .body("editoraId", is(editora2Id))
                 .statusCode(HttpStatus.OK.value());
@@ -114,7 +127,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .replace("{{editoraId}}", editora2Id)
                 .replace("{{titulo}}", "O triste fim da minha ereção")
                 .replace("{{dataPublicacao}}", "2018-01-01")
-                .replace("{{generoLiterario}}", "Científico")
+                .replace("{{generoLiterarioId}}", generoLiterario2Id)
                 .replace("{{isbn}}", "28172874989");
 
         Response response = given()
@@ -136,15 +149,15 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("titulo"))
                 .body("$", hasKey("dataPublicacao"))
-                .body("$", hasKey("generoLiterario"))
                 .body("$", hasKey("isbn"))
+                .body("$", hasKey("generoLiterarioId"))
                 .body("$", hasKey("autorId"))
                 .body("$", hasKey("editoraId"))
                 .body("id", is(id))
                 .body("titulo", is("O triste fim da minha ereção"))
                 .body("dataPublicacao", is("2018-01-01"))
-                .body("generoLiterario", is("Científico"))
                 .body("isbn", is("28172874989"))
+                .body("generoLiterarioId", is(generoLiterario2Id))
                 .body("autorId", is(autor2Id))
                 .body("editoraId", is(editora2Id))
                 .statusCode(HttpStatus.OK.value());
@@ -167,7 +180,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .replace("{{editoraId}}", editora2Id)
                 .replace("{{titulo}}", "O triste fim da minha ereção")
                 .replace("{{dataPublicacao}}", "2018-01-01")
-                .replace("{{generoLiterario}}", "Romance")
+                .replace("{{generoLiterarioId}}", generoLiterario2Id)
                 .replace("{{isbn}}", "28172874989");
 
         given()
@@ -188,28 +201,28 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("titulo"))
                 .body("$", hasKey("dataPublicacao"))
-                .body("$", hasKey("generoLiterario"))
                 .body("$", hasKey("isbn"))
+                .body("$", hasKey("generoLiterarioId"))
                 .body("$", hasKey("autorId"))
                 .body("$", hasKey("editoraId"))
                 .body("id", is(livro2Id))
                 .body("titulo", is("O triste fim da minha ereção"))
                 .body("dataPublicacao", is("2018-01-01"))
-                .body("generoLiterario", is("Romance"))
                 .body("isbn", is("28172874989"))
+                .body("generoLiterarioId", is(generoLiterario2Id))
                 .body("autorId", is(autor2Id))
                 .body("editoraId", is(editora2Id))
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    public void atualizarLivro_GeneroLiterarioVazio_400BadRequest() {
+    public void atualizarLivro_CampoVazio_400BadRequest() {
         String payload = livroJson
                 .replace("{{autorId}}", autor2Id)
                 .replace("{{editoraId}}", editora1Id)
                 .replace("{{titulo}}", "Dom casmurro")
-                .replace("{{dataPublicacao}}", "1983-04-03")
-                .replace("{{generoLiterario}}", "")
+                .replace("{{dataPublicacao}}", "")
+                .replace("{{generoLiterarioId}}", generoLiterario2Id)
                 .replace("{{isbn}", "312312312312321");
 
         given()
@@ -237,7 +250,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("generoLiterario")))
+                .body("content", everyItem(hasKey("generoLiterarioNome")))
                 .body("content", everyItem(hasKey("isbn")))
                 .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("editoraNome")))
@@ -245,16 +258,16 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[0].id", is(livro2Id))
                 .body("content[0].titulo", is("O triste fim da minha ereção"))
                 .body("content[0].dataPublicacao", is("2018-01-01"))
-                .body("content[0].generoLiterario", is("Científico"))
                 .body("content[0].isbn", is("28172874989"))
+                .body("content[0].generoLiterarioNome", is("Aventura"))
                 .body("content[0].autorNome", is("Olavo Wilke"))
                 .body("content[0].editoraNome", is("Saraiva"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro1Id))
                 .body("content[1].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[1].dataPublicacao", is("1915-01-01"))
-                .body("content[1].generoLiterario", is("Romance"))
                 .body("content[1].isbn", is("28172874989"))
+                .body("content[1].generoLiterarioNome", is("Romance"))
                 .body("content[1].autorNome", is("Lima Barreto"))
                 .body("content[1].editoraNome", is("Panini"))
                 .statusCode(HttpStatus.OK.value());
@@ -275,7 +288,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("generoLiterario")))
+                .body("content", everyItem(hasKey("generoLiterarioNome")))
                 .body("content", everyItem(hasKey("isbn")))
                 .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("editoraNome")))
@@ -284,14 +297,14 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[0].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[0].dataPublicacao", is("1915-01-01"))
                 .body("content[0].isbn", is("28172874989"))
-                .body("content[0].generoLiterario", is("Romance"))
+                .body("content[0].generoLiterarioNome", is("Romance"))
                 .body("content[0].autorNome", is("Lima Barreto"))
                 .body("content[0].editoraNome", is("Panini"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro2Id))
                 .body("content[1].titulo", is("O triste fim da minha ereção"))
                 .body("content[1].dataPublicacao", is("2018-01-01"))
-                .body("content[1].generoLiterario", is("Científico"))
+                .body("content[1].generoLiterarioNome", is("Aventura"))
                 .body("content[1].isbn", is("28172874989"))
                 .body("content[1].autorNome", is("Olavo Wilke"))
                 .body("content[1].editoraNome", is("Saraiva"))
@@ -301,7 +314,7 @@ public class LivroTest extends IntegrationTestConfiguration {
     @Test
     public void findByPage_QuandoParametroGeneroLiterario_Retornando200OK() {
         given()
-                .param("orderBy", "generoLiterario")
+                .param("orderBy", "generoLiterario.nome")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -313,7 +326,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("generoLiterario")))
+                .body("content", everyItem(hasKey("generoLiterarioNome")))
                 .body("content", everyItem(hasKey("isbn")))
                 .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("editoraNome")))
@@ -321,7 +334,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[0].id", is(livro2Id))
                 .body("content[0].titulo", is("O triste fim da minha ereção"))
                 .body("content[0].dataPublicacao", is("2018-01-01"))
-                .body("content[0].generoLiterario", is("Científico"))
+                .body("content[0].generoLiterarioNome", is("Aventura"))
                 .body("content[0].isbn", is("28172874989"))
                 .body("content[0].autorNome", is("Olavo Wilke"))
                 .body("content[0].editoraNome", is("Saraiva"))
@@ -329,7 +342,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[1].id", is(livro1Id))
                 .body("content[1].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[1].dataPublicacao", is("1915-01-01"))
-                .body("content[1].generoLiterario", is("Romance"))
+                .body("content[1].generoLiterarioNome", is("Romance"))
                 .body("content[1].isbn", is("28172874989"))
                 .body("content[1].autorNome", is("Lima Barreto"))
                 .body("content[1].editoraNome", is("Panini"))
@@ -351,7 +364,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("generoLiterario")))
+                .body("content", everyItem(hasKey("generoLiterarioNome")))
                 .body("content", everyItem(hasKey("isbn")))
                 .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("editoraNome")))
@@ -359,7 +372,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[0].id", is(livro1Id))
                 .body("content[0].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[0].dataPublicacao", is("1915-01-01"))
-                .body("content[0].generoLiterario", is("Romance"))
+                .body("content[0].generoLiterarioNome", is("Romance"))
                 .body("content[0].isbn", is("28172874989"))
                 .body("content[0].autorNome", is("Lima Barreto"))
                 .body("content[0].editoraNome", is("Panini"))
@@ -367,7 +380,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[1].id", is(livro2Id))
                 .body("content[1].titulo", is("O triste fim da minha ereção"))
                 .body("content[1].dataPublicacao", is("2018-01-01"))
-                .body("content[1].generoLiterario", is("Científico"))
+                .body("content[1].generoLiterarioNome", is("Aventura"))
                 .body("content[1].isbn", is("28172874989"))
                 .body("content[1].autorNome", is("Olavo Wilke"))
                 .body("content[1].editoraNome", is("Saraiva"))
@@ -389,7 +402,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("id")))
                 .body("content", everyItem(hasKey("titulo")))
                 .body("content", everyItem(hasKey("dataPublicacao")))
-                .body("content", everyItem(hasKey("generoLiterario")))
+                .body("content", everyItem(hasKey("generoLiterarioNome")))
                 .body("content", everyItem(hasKey("isbn")))
                 .body("content", everyItem(hasKey("autorNome")))
                 .body("content", everyItem(hasKey("editoraNome")))
@@ -397,7 +410,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[0].id", is(livro1Id))
                 .body("content[0].titulo", is("O triste fim de Policarpo Quaresma"))
                 .body("content[0].dataPublicacao", is("1915-01-01"))
-                .body("content[0].generoLiterario", is("Romance"))
+                .body("content[0].generoLiterarioNome", is("Romance"))
                 .body("content[0].isbn", is("28172874989"))
                 .body("content[0].editoraNome", is("Panini"))
                 .body("content[0].autorNome", is("Lima Barreto"))
@@ -405,7 +418,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[1].id", is(livro2Id))
                 .body("content[1].titulo", is("O triste fim da minha ereção"))
                 .body("content[1].dataPublicacao", is("2018-01-01"))
-                .body("content[1].generoLiterario", is("Científico"))
+                .body("content[1].generoLiterarioNome", is("Aventura"))
                 .body("content[1].isbn", is("28172874989"))
                 .body("content[1].editoraNome", is("Saraiva"))
                 .body("content[1].autorNome", is("Olavo Wilke"))
