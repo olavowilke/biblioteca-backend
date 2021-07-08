@@ -126,36 +126,4 @@ public class EditoraTest extends IntegrationTestConfiguration {
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
-    @Test
-    public void cadastrarEditora_Retornando400BADREQUEST_QuandoNomeMaiorQue50Caracteres() {
-        String payload = editoraJson
-                .replace("{{nome}}", "Teste para validar quando o nome supera 50 caracteres");
-
-        given()
-                .body(payload)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .when()
-                .post()
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO NOME NÃO DEVE CONTER MAIS DO QUE 50 CARACTERES."));
-    }
-
-    @Test
-    public void cadastrarEditora_Retornando400BADREQUEST_QuandoNomeVazio() {
-        String payload = editoraJson
-                .replace("{{nome}}", "");
-
-        given()
-                .body(payload)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .when()
-                .post()
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO NOME NÃO DEVE ESTAR EM BRANCO."));
-    }
-
 }
