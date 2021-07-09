@@ -57,7 +57,7 @@ public class AutorController {
         autorService.deleteById(id);
     }
 
-    @GetMapping("/lista")
+    @GetMapping("/dropdown")
     public List<DropdownDTO> findForDropdown() {
         return autorService.findForDropdown();
     }

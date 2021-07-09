@@ -2,6 +2,7 @@ package br.com.biblioteca.util;
 
 import br.com.biblioteca.domains.autor.Autor;
 import br.com.biblioteca.domains.editora.Editora;
+import br.com.biblioteca.domains.genero_literario.GeneroLiterario;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -20,6 +21,11 @@ public class DropdownDTO {
     public DropdownDTO(Editora editora) {
         this.id = editora.getId();
         this.nome = editora.getNome();
+    }
+
+    public DropdownDTO(GeneroLiterario generoLiterario) {
+        this.id = generoLiterario.getId();
+        this.nome = generoLiterario.getNome();
     }
 
 }
