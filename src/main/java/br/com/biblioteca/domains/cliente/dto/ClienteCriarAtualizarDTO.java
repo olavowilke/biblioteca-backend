@@ -19,7 +19,6 @@ public class ClienteCriarAtualizarDTO {
     private String nome;
 
     @CPF
-    @Size(min = 11, max = 11)
     private String cpf;
 
     @Valid
