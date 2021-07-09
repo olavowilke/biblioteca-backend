@@ -21,6 +21,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
 
     private String editoraJson;
     private Editora editora1, editora2;
+    private String editora1Id, editora2Id;
 
     @Before
     public void setUp() {
@@ -33,8 +34,11 @@ public class EditoraTest extends IntegrationTestConfiguration {
     private void prepararDados() {
         Editora editora1 = new Editora("Panini");
         this.editora1 = editoraRepository.save(editora1);
+        this.editora1Id = editora1.getId().toString();
+
         Editora editora2 = new Editora("Abril");
         this.editora2 = editoraRepository.save(editora2);
+        this.editora2Id = editora2.getId().toString();
     }
 
     @Test
@@ -124,6 +128,25 @@ public class EditoraTest extends IntegrationTestConfiguration {
                 .delete("/{clienteId}")
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    public void dropdown_Retornando200OK() {
+        given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/dropdown")
+                .then()
+                .body("$", everyItem(hasKey("id")))
+                .body("$", everyItem(hasKey("nome")))
+                .body("[0].size()", is(2))
+                .body("[0].id", is(editora1Id))
+                .body("[0].nome", is("Panini"))
+                .body("[1].size()", is(2))
+                .body("[1].id", is(editora2Id))
+                .body("[1].nome", is("Abril"))
+                .statusCode(HttpStatus.OK.value());
     }
 
 }
