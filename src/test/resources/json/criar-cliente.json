@@ -12,7 +12,7 @@
   "nome": "{{nome}}",
   "telefone": {
     "ddd": "{{telefone.ddd}}",
-    "numero": "{{telefone.numero}}",
-    "tipoTelefone": "{{telefone.tipoTelefone}}"
+    "tipoTelefone": "{{telefone.tipoTelefone}}",
+    "numero": "{{telefone.numero}}"
   }
 }
