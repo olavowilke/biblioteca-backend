@@ -23,6 +23,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
     private String autorJson;
     private Autor autor, autor2;
+    private String autor1Id, autor2Id;
 
     @Before
     public void setUp() {
@@ -35,9 +36,11 @@ public class AutorTest extends IntegrationTestConfiguration {
     private void prepararDados() {
         Autor autor = new Autor("Machado de Assis", "Brasileiro", LocalDate.of(1839, 5, 10));
         this.autor = autorRepository.save(autor);
+        this.autor1Id = autor.getId().toString();
 
         Autor autor2 = new Autor("Vinicius de Moraes", "Brasileiro", LocalDate.of(1913, 8, 26));
         this.autor2 = autorRepository.save(autor2);
+        this.autor2Id = autor2.getId().toString();
     }
 
     @Test
@@ -205,6 +208,25 @@ public class AutorTest extends IntegrationTestConfiguration {
                 .body("content[1].nome", is("Vinicius de Moraes"))
                 .body("content[1].nacionalidade", is("Brasileiro"))
                 .body("content[1].dataNascimento", is("1913-08-26"))
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void dropdown_Retornando200OK() {
+        given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/dropdown")
+                .then()
+                .body("$", everyItem(hasKey("id")))
+                .body("$", everyItem(hasKey("nome")))
+                .body("[0].size()", is(2))
+                .body("[0].id", is(autor1Id))
+                .body("[0].nome", is("Machado de Assis"))
+                .body("[1].size()", is(2))
+                .body("[1].id", is(autor2Id))
+                .body("[1].nome", is("Vinicius de Moraes"))
                 .statusCode(HttpStatus.OK.value());
     }
 

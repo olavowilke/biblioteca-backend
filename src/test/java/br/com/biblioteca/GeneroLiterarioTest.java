@@ -165,4 +165,23 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
                 .body("mensagem", is("O CAMPO NOME NÃO DEVE ESTAR EM BRANCO."));
     }
 
+    @Test
+    public void dropdown_Retornando200OK() {
+        given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/dropdown")
+                .then()
+                .body("$", everyItem(hasKey("id")))
+                .body("$", everyItem(hasKey("nome")))
+                .body("[0].size()", is(2))
+                .body("[0].id", is(generoLiterario1Id))
+                .body("[0].nome", is("Romance"))
+                .body("[1].size()", is(2))
+                .body("[1].id", is(generoLiterario2Id))
+                .body("[1].nome", is("Aventura"))
+                .statusCode(HttpStatus.OK.value());
+    }
+
 }

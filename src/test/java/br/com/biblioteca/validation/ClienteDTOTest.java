@@ -255,7 +255,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .post()
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO NUMERO DO TELEFONE NÃO DEVE ESTAR EM BRANCO."));
+                .body("mensagem", is("O CAMPO NÚMERO DO TELEFONE NÃO DEVE ESTAR EM BRANCO."));
     }
 
     @Test
@@ -307,7 +307,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .post()
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO NUMERO DO ENDEREÇO NÃO DEVE ESTAR EM BRANCO."));
+                .body("mensagem", is("O CAMPO NÚMERO DO ENDEREÇO NÃO DEVE ESTAR EM BRANCO."));
     }
 
     @Test
@@ -723,7 +723,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .put("/{clienteId}")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO NUMERO DO TELEFONE NÃO DEVE ESTAR EM BRANCO."));
+                .body("mensagem", is("O CAMPO NÚMERO DO TELEFONE NÃO DEVE ESTAR EM BRANCO."));
     }
 
     @Test
@@ -775,7 +775,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .put("/{clienteId}")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO NUMERO DO ENDEREÇO NÃO DEVE ESTAR EM BRANCO."));
+                .body("mensagem", is("O CAMPO NÚMERO DO ENDEREÇO NÃO DEVE ESTAR EM BRANCO."));
     }
 
     @Test
