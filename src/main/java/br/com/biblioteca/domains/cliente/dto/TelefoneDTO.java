@@ -13,8 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class TelefoneDTO {
 
-    @NotBlank
-    @Size(max = 2)
+    @Size(min = 2, max = 2)
     private String ddd;
 
     @NotBlank
