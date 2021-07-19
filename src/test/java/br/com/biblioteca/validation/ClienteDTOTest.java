@@ -203,7 +203,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .post()
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO DDD NÃO DEVE ESTAR EM BRANCO."));
+                .body("mensagem", is("O CAMPO DDD DEVE CONTER 2 CARACTERES."));
     }
 
     @Test
@@ -229,7 +229,33 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .post()
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO DDD NÃO DEVE CONTER MAIS DO QUE 2 CARACTERES."));
+                .body("mensagem", is("O CAMPO DDD DEVE CONTER 2 CARACTERES."));
+    }
+
+    @Test
+    public void cadastrarCliente_Retornando400BADREQUEST_QuandoDDDMenor2Caracteres() {
+        String payload = clienteJson
+                .replace("{{nome}}", "Leonardo")
+                .replace("{{cpf}}", "10352722967")
+                .replace("{{dataNascimento}}", "1994-04-03")
+                .replace("{{telefone.ddd}}", "1")
+                .replace("{{telefone.numero}}", "994568475")
+                .replace("{{telefone.tipoTelefone}}", "CELULAR")
+                .replace("{{endereco.logradouro}}", "Rua jababara")
+                .replace("{{endereco.numero}}", "654")
+                .replace("{{endereco.cep}}", "86705000")
+                .replace("{{endereco.cidade}}", "Siberrr")
+                .replace("{{endereco.estado}}", "PR")
+                .replace("{{endereco.complemento}}", "");
+        given()
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("mensagem", is("O CAMPO DDD DEVE CONTER 2 CARACTERES."));
     }
 
     @Test
@@ -671,7 +697,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .put("/{clienteId}")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO DDD NÃO DEVE ESTAR EM BRANCO."));
+                .body("mensagem", is("O CAMPO DDD DEVE CONTER 2 CARACTERES."));
     }
 
     @Test
@@ -697,7 +723,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .put("/{clienteId}")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO DDD NÃO DEVE CONTER MAIS DO QUE 2 CARACTERES."));
+                .body("mensagem", is("O CAMPO DDD DEVE CONTER 2 CARACTERES."));
     }
 
     @Test

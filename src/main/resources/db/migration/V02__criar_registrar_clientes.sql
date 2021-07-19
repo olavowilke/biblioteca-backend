@@ -5,7 +5,7 @@ CREATE TYPE tipo_telefone_info AS ENUM (
 
 create table tb_telefone (
 	id UUID primary key,
-	ddd varchar(3),
+	ddd varchar(2),
 	numero varchar(20),
 	tipo tipo_telefone_info,
     created_at TIMESTAMP,
