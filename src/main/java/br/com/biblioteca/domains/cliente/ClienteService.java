@@ -19,7 +19,7 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
 
-    private static final String CPF_USADO_DESGRACA = "CPF EM USOOOOOOOOOOOO";
+    private static final String CPF_EM_USO = "CPF EM USO";
 
     public Cliente criar(ClienteCriarAtualizarDTO clienteCriarAtualizarDTO) {
         Cliente cliente = new Cliente(clienteCriarAtualizarDTO);
@@ -30,7 +30,7 @@ public class ClienteService {
     private void validarCpf(String cpf) {
         Cliente cliente = clienteRepository.findByCpf(cpf);
         if (cliente != null) {
-            throw new CpfAlreadyUsedException(CPF_USADO_DESGRACA);
+            throw new CpfAlreadyUsedException(CPF_EM_USO);
         }
     }
 
@@ -44,7 +44,7 @@ public class ClienteService {
     private void validarCpfComId(UUID id, String cpf) {
         Cliente cliente = clienteRepository.findByCpfAndId(cpf, id);
         if (cliente == null) {
-            throw new CpfAlreadyUsedException(CPF_USADO_DESGRACA);
+            throw new CpfAlreadyUsedException(CPF_EM_USO);
         }
     }
 

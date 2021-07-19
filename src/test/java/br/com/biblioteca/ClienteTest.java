@@ -117,7 +117,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .post()
                 .then()
                 .statusCode(HttpStatus.CONFLICT.value())
-                .body("mensagem", is("CPF EM USOOOOOOOOOOOO"));
+                .body("mensagem", is("CPF EM USO"));
     }
 
     @Test
@@ -249,7 +249,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .put("/{clienteId}")
                 .then()
                 .statusCode(HttpStatus.CONFLICT.value())
-                .body("mensagem", is("CPF EM USOOOOOOOOOOOO"));
+                .body("mensagem", is("CPF EM USO"));
     }
 
     @Test
