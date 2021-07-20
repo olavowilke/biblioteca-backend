@@ -13,18 +13,19 @@ import static org.hamcrest.core.Is.is;
 
 public class ClienteDTOTest extends IntegrationTestConfiguration {
 
-    private String clienteJson;
+    private String clienteJsonCriar, clienteJsonAtualizar;
 
     @Before
     public void setUp() {
         super.setUp();
         RestAssured.basePath = "/clientes";
-        clienteJson = ResourceUtils.getContentFromResource("/json/criar-cliente.json");
+        clienteJsonCriar = ResourceUtils.getContentFromResource("/json/criar-cliente.json");
+        clienteJsonAtualizar = ResourceUtils.getContentFromResource("/json/atualizar-cliente.json");
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoNomeVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoNomeVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "")
                 .replace("{{cpf}}", "05609692016")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -50,8 +51,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoNomeMaior100Caracteres() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoNomeMaior100Caracteres() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Teste para validar mais de 100 caracteresTeste para validar mais de 100 caracteresTeste para validar mais de ")
                 .replace("{{cpf}}", "05609692016")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -77,8 +78,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoCpfMenor11Caracteres() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoCpfMenor11Caracteres() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "1234567890")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -103,8 +104,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoCpfMaior11Caracteres() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoCpfMaior11Caracteres() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "123456789011")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -129,8 +130,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoCpfInvalido() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoCpfInvalido() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "12345678901")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -155,8 +156,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoCpfVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoCpfVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -181,8 +182,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoDDDVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoDDDVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -207,8 +208,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoDDDMaior2Caracteres() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoDDDMaior2Caracteres() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -233,8 +234,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoDDDMenor2Caracteres() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoDDDMenor2Caracteres() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -259,8 +260,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoNumeroTelefoneVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoNumeroTelefoneVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -285,8 +286,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoTipoTelefoneNulo() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoTipoTelefoneNulo() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Roberto")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1945-04-01")
@@ -311,8 +312,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoNumeroEnderecoVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoNumeroEnderecoVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -337,8 +338,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoLogradouroVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoLogradouroVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -363,8 +364,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoCepVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoCepVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -389,8 +390,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoCidadeVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoCidadeVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -415,8 +416,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoEstadoVazio() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoEstadoVazio() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -441,8 +442,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoEstadoMaior2Caracteres() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoEstadoMaior2Caracteres() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -467,8 +468,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoComplementoMaior200Caracteres() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoComplementoMaior200Caracteres() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
@@ -493,8 +494,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando400BADREQUEST_QuandoDataNascimentoNulo() {
-        String payload = clienteJson
+    public void cadastrar_Retornando400BADREQUEST_QuandoDataNascimentoNulo() {
+        String payload = clienteJsonCriar
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "")
@@ -520,9 +521,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoNomeVazio() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "")
-                .replace("{{cpf}}", "05609692016")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "43")
                 .replace("{{telefone.numero}}", "994568475")
@@ -546,9 +546,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoNomeMaior100Caracteres() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Teste para validar mais de 100 caracteresTeste para validar mais de 100 caracteresTeste para validar mais de ")
-                .replace("{{cpf}}", "05609692016")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "43")
                 .replace("{{telefone.numero}}", "994568475")
@@ -571,114 +570,9 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void atualizar_Retornando400BADREQUEST_QuandoCpfMenor11Caracteres() {
-        String payload = clienteJson
-                .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "1234567890")
-                .replace("{{dataNascimento}}", "1994-04-03")
-                .replace("{{telefone.ddd}}", "43")
-                .replace("{{telefone.numero}}", "994568475")
-                .replace("{{telefone.tipoTelefone}}", "CELULAR")
-                .replace("{{endereco.logradouro}}", "Rua jababara")
-                .replace("{{endereco.numero}}", "654")
-                .replace("{{endereco.cep}}", "86705000")
-                .replace("{{endereco.cidade}}", "Siberrr")
-                .replace("{{endereco.estado}}", "PR")
-                .replace("{{endereco.complemento}}", "");
-        given()
-                .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
-                .body(payload)
-                .contentType((ContentType.JSON))
-                .when()
-                .put("/{clienteId}")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("NÚMERO DO REGISTRO DE CONTRIBUINTE INDIVIDUAL BRASILEIRO (CPF) INVÁLIDO"));
-    }
-
-    @Test
-    public void atualizar_Retornando400BADREQUEST_QuandoCpfMaior11Caracteres() {
-        String payload = clienteJson
-                .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "123456789011")
-                .replace("{{dataNascimento}}", "1994-04-03")
-                .replace("{{telefone.ddd}}", "43")
-                .replace("{{telefone.numero}}", "994568475")
-                .replace("{{telefone.tipoTelefone}}", "CELULAR")
-                .replace("{{endereco.logradouro}}", "Rua jababara")
-                .replace("{{endereco.numero}}", "654")
-                .replace("{{endereco.cep}}", "86705000")
-                .replace("{{endereco.cidade}}", "Siberrr")
-                .replace("{{endereco.estado}}", "PR")
-                .replace("{{endereco.complemento}}", "");
-        given()
-                .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
-                .body(payload)
-                .contentType((ContentType.JSON))
-                .when()
-                .put("/{clienteId}")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("NÚMERO DO REGISTRO DE CONTRIBUINTE INDIVIDUAL BRASILEIRO (CPF) INVÁLIDO"));
-    }
-
-    @Test
-    public void atualizar_Retornando400BADREQUEST_QuandoCpfInvalido() {
-        String payload = clienteJson
-                .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "12345678901")
-                .replace("{{dataNascimento}}", "1994-04-03")
-                .replace("{{telefone.ddd}}", "43")
-                .replace("{{telefone.numero}}", "994568475")
-                .replace("{{telefone.tipoTelefone}}", "CELULAR")
-                .replace("{{endereco.logradouro}}", "Rua jababara")
-                .replace("{{endereco.numero}}", "654")
-                .replace("{{endereco.cep}}", "86705000")
-                .replace("{{endereco.cidade}}", "Siberrr")
-                .replace("{{endereco.estado}}", "PR")
-                .replace("{{endereco.complemento}}", "");
-        given()
-                .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
-                .body(payload)
-                .contentType((ContentType.JSON))
-                .when()
-                .put("/{clienteId}")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("NÚMERO DO REGISTRO DE CONTRIBUINTE INDIVIDUAL BRASILEIRO (CPF) INVÁLIDO"));
-    }
-
-    @Test
-    public void atualizar_Retornando400BADREQUEST_QuandoCpfVazio() {
-        String payload = clienteJson
-                .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "")
-                .replace("{{dataNascimento}}", "1994-04-03")
-                .replace("{{telefone.ddd}}", "43")
-                .replace("{{telefone.numero}}", "994568475")
-                .replace("{{telefone.tipoTelefone}}", "CELULAR")
-                .replace("{{endereco.logradouro}}", "Rua jababara")
-                .replace("{{endereco.numero}}", "654")
-                .replace("{{endereco.cep}}", "86705000")
-                .replace("{{endereco.cidade}}", "Siberrr")
-                .replace("{{endereco.estado}}", "PR")
-                .replace("{{endereco.complemento}}", "");
-        given()
-                .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
-                .body(payload)
-                .contentType((ContentType.JSON))
-                .when()
-                .put("/{clienteId}")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("NÚMERO DO REGISTRO DE CONTRIBUINTE INDIVIDUAL BRASILEIRO (CPF) INVÁLIDO"));
-    }
-
-    @Test
     public void atualizar_Retornando400BADREQUEST_QuandoDDDVazio() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "")
                 .replace("{{telefone.numero}}", "994568475")
@@ -702,9 +596,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoDDDMaior2Caracteres() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "123")
                 .replace("{{telefone.numero}}", "994568475")
@@ -728,9 +621,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoNumeroTelefoneVazio() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "")
@@ -754,9 +646,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoTipoTelefoneNulo() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Roberto")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1945-04-01")
                 .replace("{{endereco.cep}}", "86705000")
                 .replace("{{endereco.cidade}}", "Siberrr")
@@ -780,9 +671,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoNumeroEnderecoVazio() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994561215")
@@ -806,9 +696,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoLogradouroVazio() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994561215")
@@ -832,9 +721,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoCepVazio() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994561215")
@@ -858,9 +746,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoCidadeVazio() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994561215")
@@ -884,9 +771,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoEstadoVazio() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994561215")
@@ -910,9 +796,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoEstadoMaior2Caracteres() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994561215")
@@ -936,9 +821,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoComplementoMaior200Caracteres() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994561215")
@@ -962,9 +846,8 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando400BADREQUEST_QuandoDataNascimentoNulo() {
-        String payload = clienteJson
+        String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "Leonardo")
-                .replace("{{cpf}}", "10352722967")
                 .replace("{{dataNascimento}}", "")
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994561215")

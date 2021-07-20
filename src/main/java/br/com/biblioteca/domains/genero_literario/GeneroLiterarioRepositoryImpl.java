@@ -47,4 +47,14 @@ class GeneroLiterarioRepositoryImpl implements GeneroLiterarioRepository {
         return generoLiterarioRepositoryJpa.findForDropdown();
     }
 
+    @Override
+    public GeneroLiterario findByNome(String nome) {
+        return generoLiterarioRepositoryJpa.findByNome(nome);
+    }
+
+    @Override
+    public GeneroLiterario findByNomeAndIdNot(String nome, UUID id) {
+        return generoLiterarioRepositoryJpa.findByNomeAndIdNot(nome, id);
+    }
+
 }

@@ -45,9 +45,9 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarGeneroLiterario_Retornando201CREATED() {
+    public void cadastrar_Retornando201CREATED() {
         String payload = generoLiterarioJson
-                .replace("{{nome}}", "Romance");
+                .replace("{{nome}}", "Terror");
 
         Response response = given()
                 .body(payload)
@@ -69,8 +69,56 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("nome"))
                 .body("size()", is(2))
                 .body("id", is(id))
-                .body("nome", is("Romance"))
+                .body("nome", is("Terror"))
                 .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void cadastrar_Retornando409CONFLICT_QuandoNomeExistente() {
+        String payload = generoLiterarioJson
+                .replace("{{nome}}", "Romance");
+
+        given()
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value())
+                .body("mensagem", is("NOME EM USO"));
+    }
+
+    @Test
+    public void cadastrar_Retornando400BADREQUEST_QuandoNomeMaiorQue50Caracteres() {
+        String payload = generoLiterarioJson
+                .replace("{{nome}}", "Teste para validar quando o nome supera 50 caracteres");
+
+        Response response = given()
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post();
+        response.then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("mensagem", is("O CAMPO NOME NÃO DEVE CONTER MAIS DO QUE 50 CARACTERES."));
+    }
+
+    @Test
+    public void cadastrar_Retornando400BADREQUEST_QuandoNomeVazio() {
+        String payload = generoLiterarioJson
+                .replace("{{nome}}", "");
+
+        given()
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("mensagem", is("O CAMPO NOME NÃO DEVE ESTAR EM BRANCO."));
     }
 
     @Test
@@ -110,7 +158,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
     @Test
     public void atualizar_Retornando204NOCONTENT() {
         String payload = generoLiterarioJson
-                .replace("{{nome}}", "Romance");
+                .replace("{{nome}}", "Terror");
 
         given()
                 .pathParam("generoLiterarioId", generoLiterario1Id)
@@ -124,45 +172,36 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void deletar_Retornando204() {
+    public void atualizar_Retornando409CONFLICT_QuandoNomeUsadoPorOutroDado() {
+        String payload = generoLiterarioJson
+                .replace("{{nome}}", "Aventura");
+
         given()
                 .pathParam("generoLiterarioId", generoLiterario1Id)
-                .when()
-                .delete("/{generoLiterarioId}")
-                .then()
-                .statusCode(HttpStatus.NO_CONTENT.value());
-    }
-
-    @Test
-    public void cadastrarGeneroLiterario_Retornando400BADREQUEST_QuandoNomeMaiorQue50Caracteres() {
-        String payload = generoLiterarioJson
-                .replace("{{nome}}", "Teste para validar quando o nome supera 50 caracteres");
-
-        Response response = given()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .post();
-        response.then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO NOME NÃO DEVE CONTER MAIS DO QUE 50 CARACTERES."));
+                .put("/{generoLiterarioId}")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value())
+                .body("mensagem", is("NOME EM USO"));
     }
 
     @Test
-    public void cadastrarGeneroLiterario_Retornando400BADREQUEST_QuandoNomeVazio() {
+    public void atualizar_Retornando409CONFLICT_QuandoNomeUsadoPeloMesmoDado() {
         String payload = generoLiterarioJson
-                .replace("{{nome}}", "");
+                .replace("{{nome}}", "Romance");
 
         given()
+                .pathParam("generoLiterarioId", generoLiterario1Id)
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .post()
+                .put("/{generoLiterarioId}")
                 .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("mensagem", is("O CAMPO NOME NÃO DEVE ESTAR EM BRANCO."));
+                .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
     @Test
@@ -182,6 +221,16 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
                 .body("[1].id", is(generoLiterario2Id))
                 .body("[1].nome", is("Aventura"))
                 .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void deletar_Retornando204() {
+        given()
+                .pathParam("generoLiterarioId", generoLiterario1Id)
+                .when()
+                .delete("/{generoLiterarioId}")
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
 }

@@ -21,4 +21,8 @@ public interface GeneroLiterarioRepository {
 
     List<DropdownDTO> findForDropdown();
 
+    GeneroLiterario findByNome(String nome);
+
+    GeneroLiterario findByNomeAndIdNot(String nome, UUID id);
+
 }

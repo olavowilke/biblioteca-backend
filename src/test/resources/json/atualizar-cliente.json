@@ -1,0 +1,17 @@
+{
+  "dataNascimento": "{{dataNascimento}}",
+  "nome": "{{nome}}",
+  "endereco": {
+    "cep": "{{endereco.cep}}",
+    "cidade": "{{endereco.cidade}}",
+    "estado": "{{endereco.estado}}",
+    "logradouro": "{{endereco.logradouro}}",
+    "numero": "{{endereco.numero}}",
+    "complemento": "{{endereco.complemento}}"
+  },
+  "telefone": {
+    "ddd": "{{telefone.ddd}}",
+    "tipoTelefone": "{{telefone.tipoTelefone}}",
+    "numero": "{{telefone.numero}}"
+  }
+}

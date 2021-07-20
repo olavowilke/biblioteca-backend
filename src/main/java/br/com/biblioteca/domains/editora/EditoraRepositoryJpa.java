@@ -19,4 +19,8 @@ interface EditoraRepositoryJpa extends JpaRepository<Editora, UUID> {
     @Query("SELECT editora FROM Editora editora ")
     List<DropdownDTO> findForDropdown();
 
+    Editora findByNome(String nome);
+
+    Editora findByNomeAndIdNot(String nome, UUID id);
+
 }

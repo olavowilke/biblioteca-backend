@@ -47,4 +47,14 @@ class EditoraRepositoryImpl implements EditoraRepository {
         return editoraRepositoryJpa.findForDropdown();
     }
 
+    @Override
+    public Editora findByNome(String nome) {
+        return editoraRepositoryJpa.findByNome(nome);
+    }
+
+    @Override
+    public Editora findByNomeAndIdNot(String nome, UUID id) {
+        return editoraRepositoryJpa.findByNomeAndIdNot(nome, id);
+    }
+
 }
