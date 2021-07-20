@@ -1,7 +1,8 @@
 package br.com.biblioteca.domains.cliente;
 
+import br.com.biblioteca.domains.cliente.dto.ClienteAtualizarDTO;
 import br.com.biblioteca.domains.cliente.dto.ClienteByIdDTO;
-import br.com.biblioteca.domains.cliente.dto.ClienteCriarAtualizarDTO;
+import br.com.biblioteca.domains.cliente.dto.ClienteCriarDTO;
 import br.com.biblioteca.domains.cliente.dto.ClienteListaDTO;
 import br.com.biblioteca.util.FilterPageable;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Cliente> criar(@Valid @RequestBody ClienteCriarAtualizarDTO clienteCriarDTO) {
+    public ResponseEntity<Cliente> criar(@Valid @RequestBody ClienteCriarDTO clienteCriarDTO) {
         Cliente clienteSalvo = clienteService.criar(clienteCriarDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -35,7 +36,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("id") UUID id, @Valid @RequestBody ClienteCriarAtualizarDTO clienteAtualizarDTO) {
+    public void update(@PathVariable("id") UUID id, @Valid @RequestBody ClienteAtualizarDTO clienteAtualizarDTO) {
         clienteService.update(id, clienteAtualizarDTO);
     }
 

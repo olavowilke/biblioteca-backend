@@ -1,6 +1,7 @@
 package br.com.biblioteca.domains.cliente;
 
-import br.com.biblioteca.domains.cliente.dto.ClienteCriarAtualizarDTO;
+import br.com.biblioteca.domains.cliente.dto.ClienteAtualizarDTO;
+import br.com.biblioteca.domains.cliente.dto.ClienteCriarDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -44,13 +45,13 @@ public class Cliente {
         this.id = UUID.randomUUID();
     }
 
-    public Cliente(ClienteCriarAtualizarDTO clienteCriarAtualizarDTO) {
+    public Cliente(ClienteCriarDTO clienteCriarDTO) {
         this();
-        this.nome = clienteCriarAtualizarDTO.getNome();
-        this.cpf = clienteCriarAtualizarDTO.getCpf();
-        this.telefone = new Telefone(clienteCriarAtualizarDTO.getTelefone());
-        this.endereco = new Endereco(clienteCriarAtualizarDTO.getEndereco());
-        this.dataNascimento = clienteCriarAtualizarDTO.getDataNascimento();
+        this.nome = clienteCriarDTO.getNome();
+        this.cpf = clienteCriarDTO.getCpf();
+        this.telefone = new Telefone(clienteCriarDTO.getTelefone());
+        this.endereco = new Endereco(clienteCriarDTO.getEndereco());
+        this.dataNascimento = clienteCriarDTO.getDataNascimento();
     }
 
     public Cliente(String nome, String cpf, LocalDate dataNascimento, Telefone telefone, Endereco endereco) {
@@ -62,10 +63,11 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public void update(ClienteCriarAtualizarDTO clienteCriarAtualizarDTO) {
-        this.nome = clienteCriarAtualizarDTO.getNome();
-        this.cpf = clienteCriarAtualizarDTO.getCpf();
-        this.dataNascimento = clienteCriarAtualizarDTO.getDataNascimento();
+    public void update(ClienteAtualizarDTO clienteAtualizarDTO) {
+        this.nome = clienteAtualizarDTO.getNome();
+        this.dataNascimento = clienteAtualizarDTO.getDataNascimento();
+        this.telefone = new Telefone(clienteAtualizarDTO.getTelefone());
+        this.endereco = new Endereco(clienteAtualizarDTO.getEndereco());
     }
 
     public void delete() {

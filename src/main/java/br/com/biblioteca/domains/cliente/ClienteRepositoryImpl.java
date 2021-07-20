@@ -39,10 +39,4 @@ class ClienteRepositoryImpl implements ClienteRepository {
         return clienteRepositoryJpa.findByCpf(cpf);
     }
 
-    @Override
-    public Cliente findByCpfAndId(String cpf, UUID id) {
-        return clienteRepositoryJpa.findByCpfAndId(cpf, id);
-    }
-
-
 }

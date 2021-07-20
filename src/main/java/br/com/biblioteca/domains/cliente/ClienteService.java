@@ -1,7 +1,8 @@
 package br.com.biblioteca.domains.cliente;
 
+import br.com.biblioteca.domains.cliente.dto.ClienteAtualizarDTO;
 import br.com.biblioteca.domains.cliente.dto.ClienteByIdDTO;
-import br.com.biblioteca.domains.cliente.dto.ClienteCriarAtualizarDTO;
+import br.com.biblioteca.domains.cliente.dto.ClienteCriarDTO;
 import br.com.biblioteca.domains.cliente.dto.ClienteListaDTO;
 import br.com.biblioteca.exception_handler.exception.CpfAlreadyUsedException;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class ClienteService {
 
     private static final String CPF_EM_USO = "CPF EM USO";
 
-    public Cliente criar(ClienteCriarAtualizarDTO clienteCriarAtualizarDTO) {
-        Cliente cliente = new Cliente(clienteCriarAtualizarDTO);
+    public Cliente criar(ClienteCriarDTO clienteCriarDTO) {
+        Cliente cliente = new Cliente(clienteCriarDTO);
         validarCpf(cliente.getCpf());
         return clienteRepository.save(cliente);
     }
@@ -34,18 +35,10 @@ public class ClienteService {
         }
     }
 
-    public void update(UUID id, ClienteCriarAtualizarDTO clienteCriarAtualizarDTO) {
+    public void update(UUID id, ClienteAtualizarDTO clienteAtualizarDTO) {
         Cliente cliente = clienteRepository.findById(id);
-        validarCpfComId(id, clienteCriarAtualizarDTO.getCpf());
-        cliente.update(clienteCriarAtualizarDTO);
+        cliente.update(clienteAtualizarDTO);
         clienteRepository.save(cliente);
-    }
-
-    private void validarCpfComId(UUID id, String cpf) {
-        Cliente cliente = clienteRepository.findByCpfAndId(cpf, id);
-        if (cliente == null) {
-            throw new CpfAlreadyUsedException(CPF_EM_USO);
-        }
     }
 
     public Page<ClienteListaDTO> findByPage(String filter, Pageable pageable) {

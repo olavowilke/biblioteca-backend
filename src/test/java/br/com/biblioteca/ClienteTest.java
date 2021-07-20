@@ -20,14 +20,15 @@ public class ClienteTest extends IntegrationTestConfiguration {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    private String clienteJson;
+    private String clienteJsonCriar, clienteJsonAtualizar;
     private Cliente cliente1, cliente2;
 
     @Before
     public void setUp() {
         super.setUp();
         RestAssured.basePath = "/clientes";
-        clienteJson = ResourceUtils.getContentFromResource("/json/criar-cliente.json");
+        clienteJsonCriar = ResourceUtils.getContentFromResource("/json/criar-cliente.json");
+        clienteJsonAtualizar = ResourceUtils.getContentFromResource("/json/atualizar-cliente.json");
         prepararDados();
     }
 
@@ -36,17 +37,18 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 LocalDate.of(1995, 4, 1),
                 new Telefone("43", "994587546", TipoTelefone.CELULAR),
                 new Endereco("Rua memes", "456", "86707005", "Arapongas", "PR", ""));
-        this.cliente1 = clienteRepository.save(cliente1);
         Cliente cliente2 = new Cliente("Leonardo Arruda", "59375822095",
                 LocalDate.of(1995, 6, 2),
                 new Telefone("11", "994562542", TipoTelefone.CELULAR),
                 new Endereco("Rua jajaja", "728", "86707004", "Sao Paulo", "SP", ""));
+        this.cliente1 = clienteRepository.save(cliente1);
         this.cliente2 = clienteRepository.save(cliente2);
     }
 
     @Test
-    public void cadastrarCliente_Retornando201CREATED_QuandoSucesso() {
-        String payload = clienteJson
+    public void cadastrar_Retornando201CREATED_QuandoSucesso() {
+        String payload = clienteJsonCriar
+                .replace("{{nome}}", "Roberval")
                 .replace("{{cpf}}", "69086874061")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{endereco.cep}}", "86705000")
@@ -55,7 +57,6 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.logradouro}}", "Rua jababara")
                 .replace("{{endereco.numero}}", "654")
                 .replace("{{endereco.complemento}}", "")
-                .replace("{{nome}}", "Testecriar1")
                 .replace("{{telefone.ddd}}", "43")
                 .replace("{{telefone.numero}}", "994568475")
                 .replace("{{telefone.tipoTelefone}}", "CELULAR");
@@ -78,6 +79,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .then()
                 .body("size()", is(6))
                 .body("id", is(id))
+                .body("nome", is("Roberval"))
                 .body("cpf", is("69086874061"))
                 .body("dataNascimento", is("1994-04-03"))
                 .body("endereco.cep", is("86705000"))
@@ -86,7 +88,6 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .body("endereco.logradouro", is("Rua jababara"))
                 .body("endereco.numero", is("654"))
                 .body("endereco.complemento", is(""))
-                .body("nome", is("Testecriar1"))
                 .body("telefone.ddd", is("43"))
                 .body("telefone.numero", is("994568475"))
                 .body("telefone.tipoTelefone", is("CELULAR"))
@@ -94,8 +95,9 @@ public class ClienteTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarCliente_Retornando409CONFLICT_QuandoCpfExistente() {
-        String payload = clienteJson
+    public void cadastrar_Retornando409CONFLICT_QuandoCpfExistente() {
+        String payload = clienteJsonCriar
+                .replace("{{nome}}", "Roberval")
                 .replace("{{cpf}}", "05609692016")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{endereco.cep}}", "86705000")
@@ -104,7 +106,6 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.logradouro}}", "Rua jababara")
                 .replace("{{endereco.numero}}", "654")
                 .replace("{{endereco.complemento}}", "")
-                .replace("{{nome}}", "Testecriar1")
                 .replace("{{telefone.ddd}}", "43")
                 .replace("{{telefone.numero}}", "994568475")
                 .replace("{{telefone.tipoTelefone}}", "CELULAR");
@@ -123,9 +124,9 @@ public class ClienteTest extends IntegrationTestConfiguration {
     @Test
     public void findById_Retornando404_NOTFOUND_QuandoIdIncorreto() {
         given()
-                .pathParam("hue", "710a52bf-21bd-496e-9097-a31d58700f59")
+                .pathParam("clienteId", "710a52bf-21bd-496e-9097-a31d58700f59")
                 .when()
-                .get("/{hue}")
+                .get("/{clienteId}")
                 .then()
                 .body("mensagem", is("CLIENTE NÃO ENCONTRADO"))
                 .statusCode(HttpStatus.NOT_FOUND.value());
@@ -199,8 +200,8 @@ public class ClienteTest extends IntegrationTestConfiguration {
 
     @Test
     public void atualizar_Retornando204NOCONTENT() {
-        String payload = clienteJson
-                .replace("{{cpf}}", "05609692016")
+        String payload = clienteJsonAtualizar
+                .replace("{{nome}}", "Testecriar1")
                 .replace("{{dataNascimento}}", "1994-04-03")
                 .replace("{{endereco.cep}}", "86705000")
                 .replace("{{endereco.cidade}}", "Siberrr")
@@ -208,7 +209,6 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.logradouro}}", "Rua jababara")
                 .replace("{{endereco.numero}}", "654")
                 .replace("{{endereco.complemento}}", "")
-                .replace("{{nome}}", "Testecriar1")
                 .replace("{{telefone.ddd}}", "43")
                 .replace("{{telefone.numero}}", "994568475")
                 .replace("{{telefone.tipoTelefone}}", "CELULAR");
@@ -222,34 +222,6 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .put("/{clienteId}")
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
-    }
-
-    @Test
-    public void atualizar_Retornando409CONFLICT_QuandoCpfEmUso() {
-        String payload = clienteJson
-                .replace("{{cpf}}", "59375822095")
-                .replace("{{dataNascimento}}", "1994-04-03")
-                .replace("{{endereco.cep}}", "86705000")
-                .replace("{{endereco.cidade}}", "Siberrr")
-                .replace("{{endereco.estado}}", "PR")
-                .replace("{{endereco.logradouro}}", "Rua jababara")
-                .replace("{{endereco.numero}}", "654")
-                .replace("{{endereco.complemento}}", "")
-                .replace("{{nome}}", "Testecriar1")
-                .replace("{{telefone.ddd}}", "43")
-                .replace("{{telefone.numero}}", "994568475")
-                .replace("{{telefone.tipoTelefone}}", "CELULAR");
-
-        given()
-                .pathParam("clienteId", cliente1.getId().toString())
-                .body(payload)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .when()
-                .put("/{clienteId}")
-                .then()
-                .statusCode(HttpStatus.CONFLICT.value())
-                .body("mensagem", is("CPF EM USO"));
     }
 
     @Test

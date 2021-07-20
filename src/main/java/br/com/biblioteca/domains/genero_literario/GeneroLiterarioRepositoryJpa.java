@@ -19,4 +19,8 @@ interface GeneroLiterarioRepositoryJpa extends JpaRepository<GeneroLiterario, UU
     @Query("SELECT generoLiterario FROM GeneroLiterario generoLiterario")
     List<DropdownDTO> findForDropdown();
 
+    GeneroLiterario findByNome(String nome);
+
+    GeneroLiterario findByNomeAndIdNot(String nome, UUID id);
+
 }

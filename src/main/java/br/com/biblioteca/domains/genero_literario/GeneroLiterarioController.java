@@ -41,7 +41,7 @@ public class GeneroLiterarioController {
     public void update(
             @PathVariable("id") UUID id,
             @Valid @RequestBody GeneroLiterarioCriarAtualizarDTO generoLiterarioAtualizarDTO) {
-        generoLiterarioService.update(id, generoLiterarioAtualizarDTO);
+        generoLiterarioService.atualizar(id, generoLiterarioAtualizarDTO);
     }
 
     @GetMapping("/{id}")

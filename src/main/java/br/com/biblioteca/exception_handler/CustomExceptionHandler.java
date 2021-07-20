@@ -1,6 +1,7 @@
 package br.com.biblioteca.exception_handler;
 
 import br.com.biblioteca.exception_handler.exception.CpfAlreadyUsedException;
+import br.com.biblioteca.exception_handler.exception.NomeAlreadyUsedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -39,6 +40,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(CpfAlreadyUsedException.class)
     public ResponseError handle(CpfAlreadyUsedException ex) {
+        ex.printStackTrace();
+        return new ResponseError(ex.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(NomeAlreadyUsedException.class)
+    public ResponseError handle(NomeAlreadyUsedException ex) {
         ex.printStackTrace();
         return new ResponseError(ex.getMessage());
     }

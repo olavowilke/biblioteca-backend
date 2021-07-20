@@ -38,7 +38,7 @@ public class EditoraController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") UUID id, @Valid @RequestBody EditoraCriarAtualizarDTO editoraAtualizarDTO) {
-        editoraService.update(id, editoraAtualizarDTO);
+        editoraService.atualizar(id, editoraAtualizarDTO);
     }
 
     @DeleteMapping("/{id}")

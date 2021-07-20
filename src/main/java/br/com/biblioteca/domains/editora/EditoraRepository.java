@@ -21,4 +21,8 @@ public interface EditoraRepository {
 
     List<DropdownDTO> findForDropdown();
 
+    Editora findByNome(String nome);
+
+    Editora findByNomeAndIdNot(String nome, UUID id);
+
 }

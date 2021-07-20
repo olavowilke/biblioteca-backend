@@ -16,5 +16,4 @@ public interface ClienteRepository {
 
     Cliente findByCpf(String cpf);
 
-    Cliente findByCpfAndId(String cpf, UUID id);
 }

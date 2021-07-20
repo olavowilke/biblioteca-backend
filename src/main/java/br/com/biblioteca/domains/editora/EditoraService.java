@@ -3,6 +3,7 @@ package br.com.biblioteca.domains.editora;
 import br.com.biblioteca.domains.editora.dto.EditoraByIdDTO;
 import br.com.biblioteca.domains.editora.dto.EditoraCriarAtualizarDTO;
 import br.com.biblioteca.domains.editora.dto.EditoraListaDTO;
+import br.com.biblioteca.exception_handler.exception.NomeAlreadyUsedException;
 import br.com.biblioteca.util.DropdownDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,15 +21,35 @@ public class EditoraService {
 
     private final EditoraRepository editoraRepository;
 
+    private static final String NOME_EM_USO = "NOME EM USO";
+
     public Editora criar(EditoraCriarAtualizarDTO editoraCriarDTO) {
         Editora editora = new Editora(editoraCriarDTO);
+        validarNomeCriar(editora.getNome());
         return editoraRepository.save(editora);
     }
 
-    public void update(UUID id, EditoraCriarAtualizarDTO editoraAtualizarDTO) {
+    private void validarNomeCriar(String nome) {
+        Editora editora = editoraRepository.findByNome(nome);
+        validarNomeExistente(editora);
+    }
+
+    public void atualizar(UUID id, EditoraCriarAtualizarDTO editoraAtualizarDTO) {
         Editora editora = editoraRepository.findById(id);
+        validarNomeAtualizar(id, editoraAtualizarDTO.getNome());
         editora.update(editoraAtualizarDTO);
         editoraRepository.save(editora);
+    }
+
+    private void validarNomeAtualizar(UUID id, String nome) {
+        Editora editora = editoraRepository.findByNomeAndIdNot(nome, id);
+        validarNomeExistente(editora);
+    }
+
+    private void validarNomeExistente(Editora editora) {
+        if (editora != null) {
+            throw new NomeAlreadyUsedException(NOME_EM_USO);
+        }
     }
 
     public EditoraByIdDTO findById(UUID id) {

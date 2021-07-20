@@ -42,9 +42,9 @@ public class EditoraTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarEditora_Retornando201CREATED() {
+    public void cadastrar_Retornando201CREATED() {
         String payload = editoraJson
-                .replace("{{nome}}", "Abril");
+                .replace("{{nome}}", "Rocco");
 
         Response response = given()
                 .body(payload)
@@ -66,8 +66,24 @@ public class EditoraTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("id"))
                 .body("$", hasKey("nome"))
                 .body("id", is(id))
-                .body("nome", is("Abril"))
+                .body("nome", is("Rocco"))
                 .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void cadastrar_Retornando409CONFLICT_QuandoNomeExistente() {
+        String payload = editoraJson
+                .replace("{{nome}}", "Abril");
+
+        given()
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value())
+                .body("mensagem", is("NOME EM USO"));
     }
 
     @Test
@@ -110,12 +126,45 @@ public class EditoraTest extends IntegrationTestConfiguration {
                 .replace("{{nome}}", "Teste1");
 
         given()
-                .pathParam("clienteId", editora1.getId().toString())
+                .pathParam("editoraId", editora1.getId().toString())
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .put("/{clienteId}")
+                .put("/{editoraId}")
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    public void atualizar_Retornando409CONFLICT_QuandoNomeUsadoPorOutroDado() {
+        String payload = editoraJson
+                .replace("{{nome}}", "Abril");
+
+        given()
+                .pathParam("editoraId", editora1Id)
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .put("/{editoraId}")
+                .then()
+                .statusCode(HttpStatus.CONFLICT.value())
+                .body("mensagem", is("NOME EM USO"));
+    }
+
+    @Test
+    public void atualizar_Retornando204NOCONTENT_QuandoNomeUsadoPeloMesmoDado() {
+        String payload = editoraJson
+                .replace("{{nome}}", "Panini");
+
+        given()
+                .pathParam("editoraId", editora1Id)
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .put("/{editoraId}")
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }

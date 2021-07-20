@@ -2,7 +2,6 @@ package br.com.biblioteca.domains.cliente.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -12,14 +11,11 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
-public class ClienteCriarAtualizarDTO {
+public class ClienteAtualizarDTO {
 
     @NotBlank
     @Size(max = 100)
     private String nome;
-
-    @CPF
-    private String cpf;
 
     @Valid
     private TelefoneDTO telefone;
