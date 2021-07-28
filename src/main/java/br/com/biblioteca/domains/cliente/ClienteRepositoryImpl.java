@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,6 +39,11 @@ class ClienteRepositoryImpl implements ClienteRepository {
     @Override
     public Cliente findByCpf(String cpf) {
         return clienteRepositoryJpa.findByCpf(cpf);
+    }
+
+    @Override
+    public List<Cliente> saveAll(Collection<Cliente> clientes) {
+        return clienteRepositoryJpa.saveAll(clientes);
     }
 
 }

@@ -36,6 +36,17 @@ class LivroRepositoryImpl implements LivroRepository {
     }
 
     @Override
+    public List<Livro> findAllById(List<UUID> livroId) {
+        return livroRepositoryJpa.findAllById(livroId);
+    }
+
+    @Override
+    public Livro findByIsbn(String isbn) {
+        Optional<Livro> livroOptional = livroRepositoryJpa.findByIsbn(isbn);
+        return livroOptional.orElseThrow(() -> new EntityNotFoundException(LIVRO_NAO_ENCONTRADO));
+    }
+
+    @Override
     public Livro findById(UUID id) {
         Optional<Livro> livroOptional = livroRepositoryJpa.findById(id);
         return livroOptional.orElseThrow(() -> new EntityNotFoundException(LIVRO_NAO_ENCONTRADO));

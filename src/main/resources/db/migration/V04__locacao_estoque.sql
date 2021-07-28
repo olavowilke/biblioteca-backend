@@ -5,16 +5,21 @@ CREATE TYPE situacao_info AS ENUM (
     'DEVOLVIDO_COM_ATRASO'
 );
 
-CREATE TABLE tb_historico_locacao (
+CREATE TABLE tb_locacao (
     id UUID PRIMARY KEY,
     cliente_id UUID NOT NULL,
-    livro_id UUID NOT NULL,
     data_locacao TIMESTAMP,
     data_prevista_devolucao TIMESTAMP,
     data_devolucao TIMESTAMP,
     situacao situacao_info,
     updated_at TIMESTAMP,
-    FOREIGN KEY(cliente_id) references tb_cliente(id),
+    FOREIGN KEY(cliente_id) references tb_cliente(id)
+);
+
+CREATE TABLE tb_locacao_livro (
+    locacao_id UUID,
+    livro_id UUID,
+    FOREIGN KEY(locacao_id) references tb_locacao(id),
     FOREIGN KEY(livro_id) references tb_livro(id)
 );
 

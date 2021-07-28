@@ -18,4 +18,8 @@ public interface LivroRepository {
 
     List<Livro> saveAll(Collection<Livro> livros);
 
+    List<Livro> findAllById(List<UUID> livroId);
+
+    Livro findByIsbn(String isbn);
+
 }
