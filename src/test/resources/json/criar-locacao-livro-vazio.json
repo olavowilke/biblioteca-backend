@@ -1,0 +1,6 @@
+{
+  "clienteId": "{{clienteId}}",
+  "dataLocacao": "{{dataLocacao}}",
+  "dataPrevistaDevolucao": "{{dataPrevistaDevolucao}}",
+  "livroId": []
+}

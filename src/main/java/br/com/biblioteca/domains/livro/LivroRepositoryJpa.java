@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
 import java.util.UUID;
 
 interface LivroRepositoryJpa extends JpaRepository<Livro, UUID> {
@@ -20,5 +21,7 @@ interface LivroRepositoryJpa extends JpaRepository<Livro, UUID> {
             "OR UPPER(livro.isbn) LIKE %:filter% " +
             "OR UPPER(autor.nome) LIKE %:filter%")
     Page<LivroListaDTO> findByPage(String filter, Pageable pageable);
+
+    Optional<Livro> findByIsbn(String isbn);
 
 }

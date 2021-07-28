@@ -1,6 +1,7 @@
 package br.com.biblioteca.domains.livro;
 
 import br.com.biblioteca.domains.livro.dto.LivroByIdDTO;
+import br.com.biblioteca.domains.livro.dto.LivroByIsbnDTO;
 import br.com.biblioteca.domains.livro.dto.LivroCriarAtualizarDTO;
 import br.com.biblioteca.domains.livro.dto.LivroListaDTO;
 import br.com.biblioteca.util.FilterPageable;
@@ -53,6 +54,11 @@ public class LivroController {
     @GetMapping
     public Page<LivroListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "") String filter, FilterPageable filterPageable) {
         return livroService.findByPage(filter.toUpperCase(), filterPageable.listByPage());
+    }
+
+    @GetMapping("/isbn/{isbn}")
+    public LivroByIsbnDTO findByIsbn(@PathVariable("isbn") String isbn){
+        return livroService.findByIsbn(isbn);
     }
 
 }

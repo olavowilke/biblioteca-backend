@@ -7,6 +7,7 @@ import br.com.biblioteca.domains.editora.EditoraRepository;
 import br.com.biblioteca.domains.genero_literario.GeneroLiterario;
 import br.com.biblioteca.domains.genero_literario.GeneroLiterarioRepository;
 import br.com.biblioteca.domains.livro.dto.LivroByIdDTO;
+import br.com.biblioteca.domains.livro.dto.LivroByIsbnDTO;
 import br.com.biblioteca.domains.livro.dto.LivroCriarAtualizarDTO;
 import br.com.biblioteca.domains.livro.dto.LivroListaDTO;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,11 @@ public class LivroService {
 
     public Page<LivroListaDTO> findByPage(String filter, Pageable pageable) {
         return livroRepository.findByPage(filter, pageable);
+    }
+
+    public LivroByIsbnDTO findByIsbn(String isbn) {
+        Livro livro = livroRepository.findByIsbn(isbn);
+        return new LivroByIsbnDTO(livro);
     }
 
 }

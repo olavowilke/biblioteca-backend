@@ -1,7 +1,6 @@
 package br.com.biblioteca.exception_handler;
 
-import br.com.biblioteca.exception_handler.exception.CpfAlreadyUsedException;
-import br.com.biblioteca.exception_handler.exception.NomeAlreadyUsedException;
+import br.com.biblioteca.exception_handler.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -48,6 +47,30 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(NomeAlreadyUsedException.class)
     public ResponseError handle(NomeAlreadyUsedException ex) {
+        ex.printStackTrace();
+        return new ResponseError(ex.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(WeekendDayException.class)
+    public ResponseError handle(WeekendDayException ex) {
+        ex.printStackTrace();
+        return new ResponseError(ex.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(LivroIndisponivelException.class)
+    public ResponseError handle(LivroIndisponivelException ex) {
+        ex.printStackTrace();
+        return new ResponseError(ex.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(EstoqueNaoAtribuidoException.class)
+    public ResponseError handle(EstoqueNaoAtribuidoException ex) {
         ex.printStackTrace();
         return new ResponseError(ex.getMessage());
     }

@@ -1,23 +1,22 @@
 package br.com.biblioteca.domains.estoque;
 
 import br.com.biblioteca.domains.livro.Livro;
+import br.com.biblioteca.exception_handler.exception.LivroIndisponivelException;
+import br.com.biblioteca.util.BigDecimalUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_estoque")
-@Where(clause = "deleted_at IS NULL")
 public class Estoque {
+
+    public static final String ESTOQUE = "LIVRO INDISPONÍVEL NO ESTOQUE";
 
     @Id
     @EqualsAndHashCode.Include
@@ -28,11 +27,29 @@ public class Estoque {
 
     private BigDecimal quantidadeDisponivel;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    public Estoque() {
+        this.id = UUID.randomUUID();
+    }
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
+    public Estoque(Livro livro, BigDecimal quantidadeDisponivel) {
+        this();
+        this.livro = livro;
+        this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+
+    public void retirar() {
+        if (BigDecimalUtil.isEqual(this.quantidadeDisponivel, BigDecimal.ZERO)) {
+            throw new LivroIndisponivelException(ESTOQUE);
+        }
+        this.quantidadeDisponivel = this.quantidadeDisponivel.subtract(BigDecimal.ONE);
+    }
+
+    public void devolver() {
+        this.quantidadeDisponivel = this.quantidadeDisponivel.add(BigDecimal.ONE);
+    }
+
+    public String getLivroTitulo() {
+        return this.livro.getTitulo();
+    }
 
 }
