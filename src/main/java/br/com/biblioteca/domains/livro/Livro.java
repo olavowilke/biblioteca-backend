@@ -83,7 +83,9 @@ public class Livro {
         return autor.getId();
     }
 
-    public String getAutorNome() { return autor.getNome(); }
+    public String getAutorNome() {
+        return autor.getNome();
+    }
 
     public UUID getEditoraId() {
         return editora.getId();

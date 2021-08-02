@@ -138,7 +138,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
                 .replace("{{livro1Id}}", livro1Id)
                 .replace("{{livro2Id}}", livro2Id)
                 .replace("{{dataLocacao}}", "2021-07-15T14:21:00")
-                .replace("{{dataPrevistaDevolucao}}", "2021-07-16T14:21:00");
+                .replace("{{dataPrevistaDevolucao}}", "2030-07-16T14:21:00");
 
         given()
                 .body(payload)
@@ -164,7 +164,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
                 .replace("{{livro1Id}}", livro1Id)
                 .replace("{{livro2Id}}", livro2Id)
                 .replace("{{dataLocacao}}", "2021-07-15T14:21:00")
-                .replace("{{dataPrevistaDevolucao}}", "2021-07-17T14:21:00");
+                .replace("{{dataPrevistaDevolucao}}", "2030-07-20T14:21:00");
 
         given()
                 .body(payload)
@@ -184,7 +184,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
                 .replace("{{livro1Id}}", livro3Id)
                 .replace("{{livro2Id}}", livro4Id)
                 .replace("{{dataLocacao}}", "2021-07-15T14:21:00")
-                .replace("{{dataPrevistaDevolucao}}", "2021-07-16T14:21:00");
+                .replace("{{dataPrevistaDevolucao}}", "2030-07-16T14:21:00");
 
         given()
                 .body(payload)
@@ -204,7 +204,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
                 .replace("{{livro1Id}}", livro5Id)
                 .replace("{{livro2Id}}", livro6Id)
                 .replace("{{dataLocacao}}", "2021-07-15T14:21:00")
-                .replace("{{dataPrevistaDevolucao}}", "2021-07-16T14:21:00");
+                .replace("{{dataPrevistaDevolucao}}", "2030-07-16T14:21:00");
 
         given()
                 .body(payload)
@@ -395,7 +395,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
     @Test
     public void atualizar_Retornando204NOCONTENT() {
         String payload = locacaoJsonAtualizar
-                .replace("{{dataDevolucao}}", "2021-07-16T14:21:00");
+                .replace("{{dataDevolucao}}", "2030-07-16T14:21:00");
 
         given()
                 .pathParam("locacaoId", locacao1Id)
@@ -418,7 +418,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
     @Test
     public void atualizar_Retornando404NOTFOUND_QuandoIdIncorreto() {
         String payload = locacaoJsonAtualizar
-                .replace("{{dataDevolucao}}", "2021-07-16T14:21:00");
+                .replace("{{dataDevolucao}}", "2030-07-16T14:21:00");
 
         given()
                 .pathParam("locacaoId", "f989621e-c601-4123-8f3e-fc1ab06a8bff")

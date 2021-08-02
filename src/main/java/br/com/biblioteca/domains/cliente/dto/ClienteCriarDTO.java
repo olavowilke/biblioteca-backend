@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -28,6 +29,7 @@ public class ClienteCriarDTO {
     private EnderecoDTO endereco;
 
     @NotNull
+    @Past
     private LocalDate dataNascimento;
 
 }
