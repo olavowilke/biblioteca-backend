@@ -16,7 +16,7 @@ import java.util.UUID;
 @Table(name = "tb_estoque")
 public class Estoque {
 
-    public static final String ESTOQUE = "LIVRO INDISPONÍVEL NO ESTOQUE";
+    public static final String ESTOQUE_INDISPONIVEL = "LIVRO INDISPONÍVEL NO ESTOQUE";
 
     @Id
     @EqualsAndHashCode.Include
@@ -39,7 +39,7 @@ public class Estoque {
 
     public void retirar() {
         if (BigDecimalUtil.isEqual(this.quantidadeDisponivel, BigDecimal.ZERO)) {
-            throw new LivroIndisponivelException(ESTOQUE);
+            throw new LivroIndisponivelException(ESTOQUE_INDISPONIVEL);
         }
         this.quantidadeDisponivel = this.quantidadeDisponivel.subtract(BigDecimal.ONE);
     }

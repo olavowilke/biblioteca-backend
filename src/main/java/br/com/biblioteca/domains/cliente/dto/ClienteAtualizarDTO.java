@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -24,6 +25,7 @@ public class ClienteAtualizarDTO {
     private EnderecoDTO endereco;
 
     @NotNull
+    @Past
     private LocalDate dataNascimento;
 
 }

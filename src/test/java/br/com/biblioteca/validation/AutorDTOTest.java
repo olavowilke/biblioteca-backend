@@ -4,6 +4,7 @@ import br.com.biblioteca.IntegrationTestConfiguration;
 import br.com.biblioteca.util.ResourceUtils;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarAutor_Retornando400BADREQUEST_QuandoNomeVazio() {
+    public void cadastrar_Retornando400BADREQUEST_QuandoNomeVazio() {
         String payload = autorJson
                 .replace("{{nome}}", "")
                 .replace("{{nacionalidade}}", "Brasileiro")
@@ -41,7 +42,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarAutor_Retornando400BADREQUEST_QuandoNomeMaior50Caracteres() {
+    public void cadastrar_Retornando400BADREQUEST_QuandoNomeMaior50Caracteres() {
         String payload = autorJson
                 .replace("{{nome}}", "Teste para validar quando o nome supera 50 caracteres")
                 .replace("{{nacionalidade}}", "Brasileiro")
@@ -59,7 +60,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarAutor_Retornando400BADREQUEST_QuandoNacionalidadeVazio() {
+    public void cadastrar_Retornando400BADREQUEST_QuandoNacionalidadeVazio() {
         String payload = autorJson
                 .replace("{{nome}}", "Roberto")
                 .replace("{{nacionalidade}}", "")
@@ -77,7 +78,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarAutor_Retornando400BADREQUEST_QuandoNacionalidadeMaior50Caracteres() {
+    public void cadastrar_Retornando400BADREQUEST_QuandoNacionalidadeMaior50Caracteres() {
         String payload = autorJson
                 .replace("{{nome}}", "Roberto")
                 .replace("{{nacionalidade}}", "Teste para validar quando o nome supera 50 caracteres")
@@ -95,7 +96,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void cadastrarAutor_Retornando400BADREQUEST_QuandoDataNascimentoNulo() {
+    public void cadastrar_Retornando400BADREQUEST_QuandoDataNascimentoNulo() {
         String payload = autorJson
                 .replace("{{nome}}", "Roberto")
                 .replace("{{nacionalidade}}", "Brasileiro")
@@ -113,7 +114,25 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void atualizarAutor_Retornando400BADREQUEST_QuandoNomeVazio() {
+    public void cadastrar_Retornando400BADREQUEST_QuandoDataNascimentoFuturo() {
+        String payload = autorJson
+                .replace("{{nome}}", "Roberto")
+                .replace("{{nacionalidade}}", "Brasileiro")
+                .replace("{{dataNascimento}}", "2030-08-01");
+
+        given()
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("mensagem", Is.is("O CAMPO DATA DE NASCIMENTO DEVE SER UMA DATA PASSADA."));
+    }
+
+    @Test
+    public void atualizar_Retornando400BADREQUEST_QuandoNomeVazio() {
         String payload = autorJson
                 .replace("{{nome}}", "")
                 .replace("{{nacionalidade}}", "Brasileiro")
@@ -131,7 +150,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void atualizarAutor_Retornando400BADREQUEST_QuandoNomeMaior50Caracteres() {
+    public void atualizar_Retornando400BADREQUEST_QuandoNomeMaior50Caracteres() {
         String payload = autorJson
                 .replace("{{nome}}", "Teste para validar quando o nome supera 50 caracteres")
                 .replace("{{nacionalidade}}", "Brasileiro")
@@ -149,7 +168,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void atualizarAutor_Retornando400BADREQUEST_QuandoNacionalidadeVazio() {
+    public void atualizar_Retornando400BADREQUEST_QuandoNacionalidadeVazio() {
         String payload = autorJson
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{nacionalidade}}", "")
@@ -167,7 +186,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void atualizarAutor_Retornando400BADREQUEST_QuandoNacionalidadeMaior50Caracteres() {
+    public void atualizar_Retornando400BADREQUEST_QuandoNacionalidadeMaior50Caracteres() {
         String payload = autorJson
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{nacionalidade}}", "Teste para validar quando o nome supera 50 caracteres")
@@ -185,7 +204,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
-    public void atualizarAutor_Retornando400BADREQUEST_QuandoDataNascimentoNulo() {
+    public void atualizar_Retornando400BADREQUEST_QuandoDataNascimentoNulo() {
         String payload = autorJson
                 .replace("{{nome}}", "Leonardo")
                 .replace("{{nacionalidade}}", "Brasileiro")
@@ -200,6 +219,24 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("mensagem", is("O PREENCHIMENTO DO CAMPO DATA DE NASCIMENTO É OBRIGATÓRIO."));
+    }
+
+    @Test
+    public void atualizar_Retornando400BADREQUEST_QuandoDataNascimentoFuturo() {
+        String payload = autorJson
+                .replace("{{nome}}", "Leonardo")
+                .replace("{{nacionalidade}}", "Brasileiro")
+                .replace("{{dataNascimento}}", "2030-08-01");
+
+        given()
+                .pathParam("autorId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
+                .body(payload)
+                .contentType((ContentType.JSON))
+                .when()
+                .put("/{autorId}")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("mensagem", Is.is("O CAMPO DATA DE NASCIMENTO DEVE SER UMA DATA PASSADA."));
     }
 
 }

@@ -520,6 +520,32 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
     }
 
     @Test
+    public void cadastrarCliente_Retornando400BADREQUEST_QuandoDataNascimentoFuturo() {
+        String payload = clienteJsonCriar
+                .replace("{{nome}}", "Leonardo")
+                .replace("{{cpf}}", "10352722967")
+                .replace("{{dataNascimento}}", "2030-08-01")
+                .replace("{{telefone.ddd}}", "11")
+                .replace("{{telefone.numero}}", "994561215")
+                .replace("{{telefone.tipoTelefone}}", "CELULAR")
+                .replace("{{endereco.logradouro}}", "Rua Jababa")
+                .replace("{{endereco.numero}}", "152")
+                .replace("{{endereco.cep}}", "84652152")
+                .replace("{{endereco.cidade}}", "Arapongas")
+                .replace("{{endereco.estado}}", "PR")
+                .replace("{{endereco.complemento}}", "");
+        given()
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post()
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("mensagem", is("O CAMPO DATA DE NASCIMENTO DEVE SER UMA DATA PASSADA."));
+    }
+
+    @Test
     public void atualizar_Retornando400BADREQUEST_QuandoNomeVazio() {
         String payload = clienteJsonAtualizar
                 .replace("{{nome}}", "")
@@ -867,6 +893,31 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("mensagem", is("O PREENCHIMENTO DO CAMPO DATA DE NASCIMENTO É OBRIGATÓRIO."));
+    }
+
+    @Test
+    public void atualizar_Retornando400BADREQUEST_QuandoDataNascimentoFuturo() {
+        String payload = clienteJsonAtualizar
+                .replace("{{nome}}", "Leonardo")
+                .replace("{{dataNascimento}}", "2030-08-01")
+                .replace("{{telefone.ddd}}", "11")
+                .replace("{{telefone.numero}}", "994561215")
+                .replace("{{telefone.tipoTelefone}}", "CELULAR")
+                .replace("{{endereco.logradouro}}", "Rua Jababa")
+                .replace("{{endereco.numero}}", "152")
+                .replace("{{endereco.cep}}", "84652152")
+                .replace("{{endereco.cidade}}", "Arapongas")
+                .replace("{{endereco.estado}}", "PR")
+                .replace("{{endereco.complemento}}", "");
+        given()
+                .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
+                .body(payload)
+                .contentType((ContentType.JSON))
+                .when()
+                .put("/{clienteId}")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("mensagem", is("O CAMPO DATA DE NASCIMENTO DEVE SER UMA DATA PASSADA."));
     }
 
 }
