@@ -21,7 +21,7 @@ CREATE TABLE tb_livro (
     data_publicacao DATE,
     editora_id UUID NOT NULL,
     genero_literario_id UUID NOT NULL,
-    isbn VARCHAR(50),
+    isbn VARCHAR(12),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     deleted_at TIMESTAMP,
@@ -29,3 +29,5 @@ CREATE TABLE tb_livro (
     FOREIGN KEY(editora_id) references tb_editora(id),
     FOREIGN KEY(genero_literario_id) references tb_genero_literario(id)
 );
+
+

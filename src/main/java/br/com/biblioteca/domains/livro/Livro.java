@@ -3,7 +3,8 @@ package br.com.biblioteca.domains.livro;
 import br.com.biblioteca.domains.autor.Autor;
 import br.com.biblioteca.domains.editora.Editora;
 import br.com.biblioteca.domains.genero_literario.GeneroLiterario;
-import br.com.biblioteca.domains.livro.dto.LivroCriarAtualizarDTO;
+import br.com.biblioteca.domains.livro.dto.LivroAtualizarDTO;
+import br.com.biblioteca.domains.livro.dto.LivroCriarDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,13 +31,13 @@ public class Livro {
     private LocalDate dataPublicacao;
     private String isbn;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Editora editora;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private GeneroLiterario generoLiterario;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Autor autor;
 
     @CreationTimestamp
@@ -50,13 +51,13 @@ public class Livro {
         this.id = UUID.randomUUID();
     }
 
-    public Livro(LivroCriarAtualizarDTO livroCriarAtualizarDTO, Autor autor, Editora editora, GeneroLiterario generoLiterario) {
+    public Livro(LivroCriarDTO livroCriarDTO, Autor autor, Editora editora, GeneroLiterario generoLiterario) {
         this();
-        this.titulo = livroCriarAtualizarDTO.getTitulo();
-        this.dataPublicacao = livroCriarAtualizarDTO.getDataPublicacao();
+        this.titulo = livroCriarDTO.getTitulo();
+        this.dataPublicacao = livroCriarDTO.getDataPublicacao();
         this.editora = editora;
         this.generoLiterario = generoLiterario;
-        this.isbn = livroCriarAtualizarDTO.getIsbn();
+        this.isbn = livroCriarDTO.getIsbn();
         this.autor = autor;
     }
 
@@ -70,9 +71,13 @@ public class Livro {
         this.autor = autor;
     }
 
-    public void atualizar(LivroCriarAtualizarDTO livroAtualizarDTO) {
+    public void atualizar(LivroAtualizarDTO livroAtualizarDTO, Autor autor, Editora editora, GeneroLiterario generoLiterario) {
         this.titulo = livroAtualizarDTO.getTitulo();
         this.dataPublicacao = livroAtualizarDTO.getDataPublicacao();
+        this.editora = editora;
+        this.autor = autor;
+        this.generoLiterario = generoLiterario;
+        this.isbn = livroAtualizarDTO.getIsbn();
     }
 
     public void delete() {

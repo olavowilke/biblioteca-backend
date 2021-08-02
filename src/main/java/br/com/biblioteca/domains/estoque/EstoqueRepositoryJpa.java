@@ -18,4 +18,5 @@ interface EstoqueRepositoryJpa extends JpaRepository<Estoque, UUID> {
             "WHERE UPPER(livro.titulo) LIKE %:filter%")
     Page<EstoqueListaDTO> findByPage(String filter, Pageable pageable);
 
+    Estoque findByLivroId(UUID id);
 }

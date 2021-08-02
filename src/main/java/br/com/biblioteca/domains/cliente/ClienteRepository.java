@@ -20,4 +20,5 @@ public interface ClienteRepository {
 
     List<Cliente> saveAll(Collection<Cliente> clientes);
 
+    void findByCpfParaValidar(String cpf);
 }

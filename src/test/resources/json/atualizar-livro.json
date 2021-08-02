@@ -4,6 +4,5 @@
   "generoLiterarioId": "{{generoLiterarioId}}",
   "dataPublicacao": "{{dataPublicacao}}",
   "titulo": "{{titulo}}",
-  "isbn": "{{isbn}}",
-  "quantidadeDisponivel": "{{quantidadeDisponivel}}"
+  "isbn": "{{isbn}}"
 }

@@ -1,9 +1,6 @@
 package br.com.biblioteca.domains.cliente;
 
-import br.com.biblioteca.domains.cliente.dto.ClienteAtualizarDTO;
-import br.com.biblioteca.domains.cliente.dto.ClienteByIdDTO;
-import br.com.biblioteca.domains.cliente.dto.ClienteCriarDTO;
-import br.com.biblioteca.domains.cliente.dto.ClienteListaDTO;
+import br.com.biblioteca.domains.cliente.dto.*;
 import br.com.biblioteca.util.FilterPageable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -49,6 +46,11 @@ public class ClienteController {
     @GetMapping("/{id}")
     public ClienteByIdDTO findById(@PathVariable("id") UUID id) {
         return clienteService.findById(id);
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public ClienteByCpfDTO findByCpf(@PathVariable("cpf") String cpf) {
+        return clienteService.findByCpf(cpf);
     }
 
     @GetMapping

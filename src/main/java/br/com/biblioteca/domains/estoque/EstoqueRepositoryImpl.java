@@ -35,4 +35,9 @@ class EstoqueRepositoryImpl implements EstoqueRepository {
         return estoqueRepositoryJpa.findByPage(filter, pageable);
     }
 
+    @Override
+    public Estoque findByLivroId(UUID id) {
+        return estoqueRepositoryJpa.findByLivroId(id);
+    }
+
 }
