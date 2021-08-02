@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
-public class LivroCriarAtualizarDTO {
+public class LivroCriarDTO {
 
     @NotBlank
     @Size(max = 50)
@@ -30,6 +31,10 @@ public class LivroCriarAtualizarDTO {
     private UUID autorId;
 
     @NotBlank
+    @Size(min = 12, max = 12)
     private String isbn;
+
+    @NotNull
+    private BigDecimal quantidadeDisponivel;
 
 }

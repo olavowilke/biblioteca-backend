@@ -1,6 +1,7 @@
 package br.com.biblioteca.domains.cliente;
 
 import br.com.biblioteca.domains.cliente.dto.ClienteListaDTO;
+import br.com.biblioteca.exception_handler.exception.CpfAlreadyUsedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import java.util.UUID;
 class ClienteRepositoryImpl implements ClienteRepository {
 
     private static final String CLIENTE_NAO_ENCONTRADO = "CLIENTE NÃO ENCONTRADO";
+    private static final String CPF_EM_USO = "CPF EM USO";
 
     private final ClienteRepositoryJpa clienteRepositoryJpa;
 
@@ -38,12 +40,21 @@ class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public Cliente findByCpf(String cpf) {
-        return clienteRepositoryJpa.findByCpf(cpf);
+        Optional<Cliente> clienteOptional = clienteRepositoryJpa.findByCpf(cpf);
+        return clienteOptional.orElseThrow(() -> new EntityNotFoundException(CLIENTE_NAO_ENCONTRADO));
     }
 
     @Override
     public List<Cliente> saveAll(Collection<Cliente> clientes) {
         return clienteRepositoryJpa.saveAll(clientes);
+    }
+
+    @Override
+    public void findByCpfParaValidar(String cpf) {
+        Optional<Cliente> clienteOptional = clienteRepositoryJpa.findByCpf(cpf);
+        if (clienteOptional.isPresent()) {
+            throw new CpfAlreadyUsedException(CPF_EM_USO);
+        }
     }
 
 }

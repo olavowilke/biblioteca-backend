@@ -1,9 +1,6 @@
 package br.com.biblioteca.domains.livro;
 
-import br.com.biblioteca.domains.livro.dto.LivroByIdDTO;
-import br.com.biblioteca.domains.livro.dto.LivroByIsbnDTO;
-import br.com.biblioteca.domains.livro.dto.LivroCriarAtualizarDTO;
-import br.com.biblioteca.domains.livro.dto.LivroListaDTO;
+import br.com.biblioteca.domains.livro.dto.*;
 import br.com.biblioteca.util.FilterPageable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,7 +28,7 @@ public class LivroController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Livro> criar(@Valid @RequestBody LivroCriarAtualizarDTO livroCriarDTO) {
+    public ResponseEntity<Livro> criar(@Valid @RequestBody LivroCriarDTO livroCriarDTO) {
         Livro livroSalvo = livroService.criar(livroCriarDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -47,7 +44,7 @@ public class LivroController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateLivro(@PathVariable("id") UUID id, @Valid @RequestBody LivroCriarAtualizarDTO livroAtualizarDTO) {
+    public void updateLivro(@PathVariable("id") UUID id, @Valid @RequestBody LivroAtualizarDTO livroAtualizarDTO) {
         livroService.atualizar(livroAtualizarDTO, id);
     }
 

@@ -73,9 +73,9 @@ public class ClienteTest extends IntegrationTestConfiguration {
         String id = getIdHeaderLocation(response);
 
         given()
-                .pathParam("clienteId", id)
+                .pathParam("id", id)
                 .when()
-                .get("/{clienteId}")
+                .get("/{id}")
                 .then()
                 .body("size()", is(6))
                 .body("id", is(id))
@@ -127,6 +127,36 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .pathParam("clienteId", "710a52bf-21bd-496e-9097-a31d58700f59")
                 .when()
                 .get("/{clienteId}")
+                .then()
+                .body("mensagem", is("CLIENTE NÃO ENCONTRADO"))
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void findByCpf_Retornando200OK() {
+        given()
+                .pathParam("cpf", "05609692016")
+                .when()
+                .get("/cpf/{cpf}")
+                .then()
+                .body("size()", is(4))
+                .body("$", hasKey("id"))
+                .body("$", hasKey("cpf"))
+                .body("$", hasKey("nome"))
+                .body("$", hasKey("dataNascimento"))
+                .body("id", is(cliente1.getId().toString()))
+                .body("cpf", is("05609692016"))
+                .body("nome", is("Victor Pietro"))
+                .body("dataNascimento", is("1995-04-01"))
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void findByCpf_Retornando404_NOTFOUND_QuandoCpfIncorreto() {
+        given()
+                .pathParam("cpf", "51164759051")
+                .when()
+                .get("/cpf/{cpf}")
                 .then()
                 .body("mensagem", is("CLIENTE NÃO ENCONTRADO"))
                 .statusCode(HttpStatus.NOT_FOUND.value());

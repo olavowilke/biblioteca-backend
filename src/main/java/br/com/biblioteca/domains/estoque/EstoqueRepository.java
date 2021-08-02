@@ -17,4 +17,5 @@ public interface EstoqueRepository {
 
     Page<EstoqueListaDTO> findByPage(String filter, Pageable pageable);
 
+    Estoque findByLivroId(UUID id);
 }

@@ -4,6 +4,7 @@ import br.com.biblioteca.domains.livro.Livro;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -18,8 +19,9 @@ public class LivroByIdDTO {
     private UUID generoLiterarioId;
     private String isbn;
     private UUID autorId;
+    private BigDecimal quantidadeDisponivel;
 
-    public LivroByIdDTO(Livro livro) {
+    public LivroByIdDTO(Livro livro, BigDecimal qtdeDisponivel) {
         this.id = livro.getId();
         this.titulo = livro.getTitulo();
         this.dataPublicacao = livro.getDataPublicacao();
@@ -27,6 +29,7 @@ public class LivroByIdDTO {
         this.editoraId = livro.getEditoraId();
         this.generoLiterarioId = livro.getGeneroLiterarioId();
         this.autorId = livro.getAutorId();
+        this.quantidadeDisponivel = qtdeDisponivel;
     }
 
 }

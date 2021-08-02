@@ -22,7 +22,7 @@ public class Estoque {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Livro livro;
 
     private BigDecimal quantidadeDisponivel;
@@ -34,6 +34,11 @@ public class Estoque {
     public Estoque(Livro livro, BigDecimal quantidadeDisponivel) {
         this();
         this.livro = livro;
+        this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+
+    public Estoque(BigDecimal quantidadeDisponivel) {
+        this();
         this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
