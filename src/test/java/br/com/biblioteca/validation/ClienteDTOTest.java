@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
 public class ClienteDTOTest extends IntegrationTestConfiguration {
@@ -39,7 +38,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -66,7 +65,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -92,7 +91,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -118,7 +117,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -144,7 +143,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -170,7 +169,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -196,7 +195,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -222,7 +221,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -248,7 +247,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -274,7 +273,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -300,7 +299,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994564215")
                 .replace("\"tipoTelefone\": \"{{telefone.tipoTelefone}}\",", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -326,7 +325,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -352,7 +351,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -378,7 +377,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -404,7 +403,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -430,7 +429,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -456,7 +455,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Arapongas")
                 .replace("{{endereco.estado}}", "Paraná")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -482,7 +481,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Arapongas")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "Teste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteres");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -508,7 +507,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Arapongas")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -534,7 +533,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Arapongas")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -559,7 +558,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -584,7 +583,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -609,7 +608,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -634,7 +633,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -659,7 +658,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -684,7 +683,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{telefone.ddd}}", "11")
                 .replace("{{telefone.numero}}", "994564215")
                 .replace("\"tipoTelefone\": \"{{telefone.tipoTelefone}}\",", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -709,7 +708,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -734,7 +733,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -759,7 +758,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -784,7 +783,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -809,7 +808,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Siberrr")
                 .replace("{{endereco.estado}}", "")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -834,7 +833,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Arapongas")
                 .replace("{{endereco.estado}}", "Paraná")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -859,7 +858,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Arapongas")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "Teste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteresTeste mais 200 caracteres");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -884,7 +883,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Arapongas")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -909,7 +908,7 @@ public class ClienteDTOTest extends IntegrationTestConfiguration {
                 .replace("{{endereco.cidade}}", "Arapongas")
                 .replace("{{endereco.estado}}", "PR")
                 .replace("{{endereco.complemento}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))

@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class EstoqueTest extends IntegrationTestConfiguration {
@@ -85,7 +84,7 @@ public class EstoqueTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroTitulo_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "livro.titulo")
                 .param("direction", "DESC")
                 .contentType(ContentType.JSON)

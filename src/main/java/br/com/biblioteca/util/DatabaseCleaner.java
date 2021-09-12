@@ -57,6 +57,9 @@ public class DatabaseCleaner {
             tableNames.add(resultSet.getString("TABLE_NAME"));
         }
         tableNames.remove("flyway_schema_history");
+        tableNames.remove("tb_user");
+        tableNames.remove("tb_authority");
+        tableNames.remove("tb_user_authority");
         return tableNames;
     }
 

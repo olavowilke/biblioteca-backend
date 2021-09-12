@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class ClienteTest extends IntegrationTestConfiguration {
@@ -61,7 +60,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .replace("{{telefone.numero}}", "994568475")
                 .replace("{{telefone.tipoTelefone}}", "CELULAR");
 
-        Response response = given()
+        Response response = givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -72,7 +71,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
 
         String id = getIdHeaderLocation(response);
 
-        given()
+        givenAuthenticated()
                 .pathParam("id", id)
                 .when()
                 .get("/{id}")
@@ -110,7 +109,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .replace("{{telefone.numero}}", "994568475")
                 .replace("{{telefone.tipoTelefone}}", "CELULAR");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -123,7 +122,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
 
     @Test
     public void findById_Retornando404_NOTFOUND_QuandoIdIncorreto() {
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", "710a52bf-21bd-496e-9097-a31d58700f59")
                 .when()
                 .get("/{clienteId}")
@@ -134,7 +133,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByCpf_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .pathParam("cpf", "05609692016")
                 .when()
                 .get("/cpf/{cpf}")
@@ -153,7 +152,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByCpf_Retornando404_NOTFOUND_QuandoCpfIncorreto() {
-        given()
+        givenAuthenticated()
                 .pathParam("cpf", "51164759051")
                 .when()
                 .get("/cpf/{cpf}")
@@ -164,7 +163,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroNome_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "nome")
                 .param("direction", "DESC")
                 .contentType(ContentType.JSON)
@@ -197,7 +196,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroCpf_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "cpf")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -243,7 +242,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .replace("{{telefone.numero}}", "994568475")
                 .replace("{{telefone.tipoTelefone}}", "CELULAR");
 
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", cliente1.getId().toString())
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -256,7 +255,7 @@ public class ClienteTest extends IntegrationTestConfiguration {
 
     @Test
     public void deletar_Retornando204() {
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", cliente1.getId().toString())
                 .when()
                 .delete("/{clienteId}")

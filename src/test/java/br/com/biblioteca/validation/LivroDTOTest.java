@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
 public class LivroDTOTest extends IntegrationTestConfiguration {
@@ -35,7 +34,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -56,7 +55,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -77,7 +76,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -98,7 +97,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -119,7 +118,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -140,7 +139,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -161,7 +160,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "O CAMPO ISBN NÃO DEVE CONTER MAIS DO QUE 12 CARACTERES");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -182,7 +181,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "1234567891111");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -203,7 +202,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{quantidadeDisponivel}}", "10")
                 .replace("{{isbn}}", "12345678911");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -223,7 +222,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{dataPublicacao}}", "1994-08-01")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -244,7 +243,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{dataPublicacao}}", "1994-08-01")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -265,7 +264,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{dataPublicacao}}", "")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -286,7 +285,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{dataPublicacao}}", "1994-05-01")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -307,7 +306,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{dataPublicacao}}", "1994-05-01")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -328,7 +327,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{dataPublicacao}}", "1994-05-01")
                 .replace("{{isbn}}", "123456789111");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -349,7 +348,7 @@ public class LivroDTOTest extends IntegrationTestConfiguration {
                 .replace("{{dataPublicacao}}", "1994-05-01")
                 .replace("{{isbn}}", "");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))

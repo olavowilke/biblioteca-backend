@@ -2,7 +2,6 @@ package br.com.biblioteca.domains.security.user;
 
 import br.com.biblioteca.domains.security.user.dto.UserFormDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

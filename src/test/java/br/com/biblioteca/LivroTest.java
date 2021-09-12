@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 
@@ -100,7 +99,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findById_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", livro2Id)
                 .when()
                 .get("/{livroId}")
@@ -127,7 +126,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findById_Retornando404NotFound() {
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", "8888b6f9-dd09-4d3b-bbd5-e58e1396f641")
                 .when()
                 .get("/{livroId}")
@@ -137,7 +136,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByIsbn_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .pathParam("isbn", livro2.getIsbn())
                 .when()
                 .get("/isbn/{isbn}")
@@ -156,7 +155,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByIsbn_Retornando404NOTFOUND_QuandoIsbnInvalido() {
-        given()
+        givenAuthenticated()
                 .pathParam("isbn", "1234")
                 .when()
                 .get("/isbn/{isbn}")
@@ -175,7 +174,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .replace("{{isbn}}", "123456789111")
                 .replace("{{quantidadeDisponivel}}", "10");
 
-        Response response = given()
+        Response response = givenAuthenticated()
                 .body(payload)
                 .contentType((ContentType.JSON))
                 .when()
@@ -185,7 +184,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
         String id = getIdHeaderLocation(response);
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", id)
                 .when()
                 .get("/{livroId}")
@@ -212,7 +211,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void deletarLivro_Retornando204NoContent() {
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", livro2Id)
                 .when()
                 .delete("/{livroId}")
@@ -230,7 +229,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .replace("{{dataPublicacao}}", "2018-01-01")
                 .replace("{{isbn}}", "123456789123");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", livro2Id)
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -239,7 +238,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", livro2Id)
                 .when()
                 .get("/{livroId}")
@@ -274,7 +273,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .replace("{{generoLiterarioId}}", generoLiterario2Id)
                 .replace("{{isbn}", "312312312312321");
 
-        given()
+        givenAuthenticated()
                 .pathParam("livroId", livro2Id)
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -286,7 +285,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_QuandoParametroTitulo_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "titulo")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -324,7 +323,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_QuandoParametroEditora_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "editora.nome")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -362,7 +361,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_QuandoParametroGeneroLiterario_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "generoLiterario.nome")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -400,7 +399,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_QuandoParametroDataPublicacao_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "dataPublicacao")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -438,7 +437,7 @@ public class LivroTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_QuandoParametroAutorNome_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "autor.nome")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)

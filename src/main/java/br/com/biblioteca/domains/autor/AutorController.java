@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,6 +27,7 @@ public class AutorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('LIBCAUTOR')")
     public ResponseEntity<Autor> criar(@Valid @RequestBody AutorCriarAtualizarDTO autorCriarDTO) {
         Autor autorSalvo = autorService.criar(autorCriarDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -36,28 +38,33 @@ public class AutorController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('LIBRAUTOR')")
     public Page<AutorListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "") String filter, FilterPageable filterPageable) {
         return autorService.findByPage(filter.toUpperCase(), filterPageable.listByPage());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('LIBRAUTOR')")
     public AutorByIdDTO findById(@PathVariable("id") UUID id) {
         return autorService.findById(id);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('LIBCAUTOR')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") UUID id, @Valid @RequestBody AutorCriarAtualizarDTO autorCriarAtualizarDTO) {
         autorService.update(id, autorCriarAtualizarDTO);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('LIBCAUTOR')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removerPorId(@PathVariable("id") UUID id) {
         autorService.deleteById(id);
     }
 
     @GetMapping("/dropdown")
+    @PreAuthorize("hasAuthority('LIBRAUTOR')")
     public List<DropdownDTO> findForDropdown() {
         return autorService.findForDropdown();
     }

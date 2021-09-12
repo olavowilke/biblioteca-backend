@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,6 +27,7 @@ public class EditoraController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('LIBCEDITORA')")
     public ResponseEntity<Editora> criar(@Valid @RequestBody EditoraCriarAtualizarDTO editoraCriarDTO) {
         Editora editoraSalva = editoraService.criar(editoraCriarDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -37,27 +39,32 @@ public class EditoraController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('LIBCEDITORA')")
     public void update(@PathVariable("id") UUID id, @Valid @RequestBody EditoraCriarAtualizarDTO editoraAtualizarDTO) {
         editoraService.atualizar(id, editoraAtualizarDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('LIBCEDITORA')")
     public void deleteById(@PathVariable("id") UUID id) {
         editoraService.deleteById(id);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('LIBREDITORA')")
     public EditoraByIdDTO findById(@PathVariable("id") UUID id) {
         return editoraService.findById(id);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('LIBREDITORA')")
     public Page<EditoraListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "") String filter, FilterPageable filterPageable) {
         return editoraService.findByPage(filter.toUpperCase(), filterPageable.listByPage());
     }
 
     @GetMapping("/dropdown")
+    @PreAuthorize("hasAuthority('LIBREDITORA')")
     public List<DropdownDTO> findForDropdown() {
         return editoraService.findForDropdown();
     }

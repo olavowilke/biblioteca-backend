@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class EditoraTest extends IntegrationTestConfiguration {
@@ -46,7 +45,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "Rocco");
 
-        Response response = given()
+        Response response = givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -57,7 +56,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
 
         String id = getIdHeaderLocation(response);
 
-        given()
+        givenAuthenticated()
                 .pathParam("editoraId", id)
                 .when()
                 .get("/{editoraId}")
@@ -75,7 +74,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "Abril");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -88,7 +87,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
 
     @Test
     public void findById_Retornando404_NOTFOUND_QuandoIdIncorreto() {
-        given()
+        givenAuthenticated()
                 .pathParam("editoraId", "710a52bf-21bd-496e-9097-a31d58700f59")
                 .when()
                 .get("/{editoraId}")
@@ -99,7 +98,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroNome_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "nome")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -125,7 +124,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "Teste1");
 
-        given()
+        givenAuthenticated()
                 .pathParam("editoraId", editora1.getId().toString())
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -141,7 +140,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "Abril");
 
-        given()
+        givenAuthenticated()
                 .pathParam("editoraId", editora1Id)
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -158,7 +157,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "Panini");
 
-        given()
+        givenAuthenticated()
                 .pathParam("editoraId", editora1Id)
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -171,7 +170,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
 
     @Test
     public void deletar_Retornando204() {
-        given()
+        givenAuthenticated()
                 .pathParam("clienteId", editora1.getId().toString())
                 .when()
                 .delete("/{clienteId}")
@@ -181,7 +180,7 @@ public class EditoraTest extends IntegrationTestConfiguration {
 
     @Test
     public void dropdown_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()

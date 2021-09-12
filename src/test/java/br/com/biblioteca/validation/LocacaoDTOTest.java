@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
 public class LocacaoDTOTest extends IntegrationTestConfiguration {
@@ -32,7 +31,7 @@ public class LocacaoDTOTest extends IntegrationTestConfiguration {
                 .replace("{{livro2Id}}", "5ea9104f-db57-470f-96dc-f955ecb75462")
                 .replace("{{dataLocacao}}", "")
                 .replace("{{dataPrevistaDevolucao}}", "2030-07-20T14:21:00");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -51,7 +50,7 @@ public class LocacaoDTOTest extends IntegrationTestConfiguration {
                 .replace("{{livro2Id}}", "5ea9104f-db57-470f-96dc-f955ecb75462")
                 .replace("{{dataLocacao}}", "2030-08-01T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "2040-07-16T14:21:00");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -70,7 +69,7 @@ public class LocacaoDTOTest extends IntegrationTestConfiguration {
                 .replace("{{livro2Id}}", "5ea9104f-db57-470f-96dc-f955ecb75462")
                 .replace("{{dataLocacao}}", "2021-07-16T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -89,7 +88,7 @@ public class LocacaoDTOTest extends IntegrationTestConfiguration {
                 .replace("{{livro2Id}}", "5ea9104f-db57-470f-96dc-f955ecb75462")
                 .replace("{{dataLocacao}}", "2021-07-16T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "2010-07-16T14:21:00");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -108,7 +107,7 @@ public class LocacaoDTOTest extends IntegrationTestConfiguration {
                 .replace("{{livro2Id}}", "5ea9104f-db57-470f-96dc-f955ecb75462")
                 .replace("{{dataLocacao}}", "2021-07-16T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "2030-07-16T14:21:00");
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -126,7 +125,7 @@ public class LocacaoDTOTest extends IntegrationTestConfiguration {
                 .replace("{{dataLocacao}}", "2021-07-16T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "2030-07-16T14:21:00");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -141,7 +140,7 @@ public class LocacaoDTOTest extends IntegrationTestConfiguration {
     public void atualizar_Retornando400BADREQUEST_QuandoLivroIdVazio() {
         String payload = locacaoJsonAtualizar
                 .replace("{{dataDevolucao}}", "");
-        given()
+        givenAuthenticated()
                 .pathParam("locacaoId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -156,7 +155,7 @@ public class LocacaoDTOTest extends IntegrationTestConfiguration {
     public void atualizar_Retornando400BADREQUEST_QuandoDataDevolucaoPassado() {
         String payload = locacaoJsonAtualizar
                 .replace("{{dataDevolucao}}", "2010-07-16T14:21:00");
-        given()
+        givenAuthenticated()
                 .pathParam("locacaoId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
