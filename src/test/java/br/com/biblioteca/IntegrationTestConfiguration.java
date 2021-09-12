@@ -2,7 +2,9 @@ package br.com.biblioteca;
 
 import br.com.biblioteca.util.DatabaseCleaner;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static io.restassured.RestAssured.given;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = AntonioNunesApplication.class)
@@ -25,11 +29,32 @@ public abstract class IntegrationTestConfiguration {
 
     @LocalServerPort
     protected int port;
+    private String accessToken;
 
     public void setUp() {
         databaseCleaner.clearTables();
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
+        loginAdmin();
+    }
+
+    private void loginAdmin() {
+        RestAssured.basePath = "/oauth/token";
+        pegarAccessToken();
+    }
+
+    private void pegarAccessToken() {
+        accessToken = given()
+                .contentType(ContentType.URLENC)
+                .auth()
+                .basic("biblioteca", "biblioteca@123")
+                .formParam("grant_type", "password")
+                .formParam("username", "admin@biblioteca.com")
+                .formParam("password", "biblioteca@123")
+                .when()
+                .post()
+                .andReturn()
+                .jsonPath().getString("access_token");
     }
 
     protected String getIdHeaderLocation(Response response) {
@@ -39,6 +64,12 @@ public abstract class IntegrationTestConfiguration {
             return matcher.group();
         }
         return null;
+    }
+
+    public RequestSpecification givenAuthenticated() {
+        return given()
+                .auth()
+                .oauth2(this.accessToken);
     }
 
 }

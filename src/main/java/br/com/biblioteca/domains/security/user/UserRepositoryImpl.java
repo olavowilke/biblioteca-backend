@@ -18,7 +18,7 @@ class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByEmailIgnoreCase(String email) {
-        return Optional.empty();
+        return userRepositoryJpa.findByEmailIgnoreCase(email);
     }
 
 }

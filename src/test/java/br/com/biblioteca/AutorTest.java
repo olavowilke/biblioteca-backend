@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class AutorTest extends IntegrationTestConfiguration {
@@ -45,7 +44,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
     @Test
     public void findById_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", autor.getId().toString())
                 .when()
                 .get("/{autorId}")
@@ -60,7 +59,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
     @Test
     public void findById_Retornando404NOTFOUND_MensagemClienteNaoEncontrado() {
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", "50b230d1-2803-42be-b71a-1f602737f2d4")
                 .when()
                 .get("/{autorId}")
@@ -76,7 +75,7 @@ public class AutorTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "1958-11-02");
 
-        Response response = given()
+        Response response = givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -87,7 +86,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
         String id = getIdHeaderLocation(response);
 
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", id)
                 .when()
                 .get("/{autorId}")
@@ -107,7 +106,7 @@ public class AutorTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "1958-11-02");
 
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", autor.getId().toString())
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -120,7 +119,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
     @Test
     public void deletarAutor_Retornando204NOCONTENT() {
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", autor.getId().toString())
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -132,7 +131,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroNome_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "nome")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -159,7 +158,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroNacionalidade_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "nacionalidade")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -186,7 +185,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroDataNascimento_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "dataNascimento")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -213,7 +212,7 @@ public class AutorTest extends IntegrationTestConfiguration {
 
     @Test
     public void dropdown_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()

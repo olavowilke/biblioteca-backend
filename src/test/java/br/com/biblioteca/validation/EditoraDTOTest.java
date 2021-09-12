@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
 public class EditoraDTOTest extends IntegrationTestConfiguration {
@@ -27,7 +26,7 @@ public class EditoraDTOTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "Teste para validar quando o nome supera 50 caracteres");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -43,7 +42,7 @@ public class EditoraDTOTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -59,7 +58,7 @@ public class EditoraDTOTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "Teste para validar quando o nome supera 50 caracteres");
 
-        given()
+        givenAuthenticated()
                 .pathParam("editoraId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -75,7 +74,7 @@ public class EditoraDTOTest extends IntegrationTestConfiguration {
         String payload = editoraJson
                 .replace("{{nome}}", "");
 
-        given()
+        givenAuthenticated()
                 .pathParam("editoraId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))

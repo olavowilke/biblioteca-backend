@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
 public class AutorDTOTest extends IntegrationTestConfiguration {
@@ -30,7 +29,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "1994-05-01");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -48,7 +47,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "1994-05-04");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -66,7 +65,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "")
                 .replace("{{dataNascimento}}", "1994-05-01");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -84,7 +83,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Teste para validar quando o nome supera 50 caracteres")
                 .replace("{{dataNascimento}}", "1994-05-04");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -102,7 +101,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -120,7 +119,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "2030-08-01");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -138,7 +137,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "1994-05-01");
 
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -156,7 +155,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "1994-05-04");
 
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -174,7 +173,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "")
                 .replace("{{dataNascimento}}", "1994-05-01");
 
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -192,7 +191,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Teste para validar quando o nome supera 50 caracteres")
                 .replace("{{dataNascimento}}", "1994-05-04");
 
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -210,7 +209,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "");
 
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))
@@ -228,7 +227,7 @@ public class AutorDTOTest extends IntegrationTestConfiguration {
                 .replace("{{nacionalidade}}", "Brasileiro")
                 .replace("{{dataNascimento}}", "2030-08-01");
 
-        given()
+        givenAuthenticated()
                 .pathParam("autorId", "9819cd30-b241-4a85-bdfb-8c7256fd5593")
                 .body(payload)
                 .contentType((ContentType.JSON))

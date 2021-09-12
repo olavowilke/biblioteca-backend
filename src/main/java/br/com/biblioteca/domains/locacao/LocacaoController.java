@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,6 +27,7 @@ public class LocacaoController {
     @ApiOperation("Cria uma Locação, à partir de um DTO")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('LIBCLOCACAO')")
     public ResponseEntity<Locacao> criar(@Valid @RequestBody LocacaoCriarDTO locacaoCriarDTO) {
         Locacao locacao = locacaoService.criar(locacaoCriarDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -38,6 +40,7 @@ public class LocacaoController {
     @ApiOperation("Atualiza Locação, no momento da devolução")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('LIBCLOCACAO')")
     public void atualizar(@PathVariable("id") UUID id,
                           @Valid @RequestBody LocacaoAtualizarDTO locacaoAtualizarDTO) {
         locacaoService.atualizar(id, locacaoAtualizarDTO);
@@ -45,6 +48,7 @@ public class LocacaoController {
 
     @ApiOperation("Realiza busca paginada")
     @GetMapping
+    @PreAuthorize("hasAuthority('LIBRLOCACAO')")
     public Page<LocacaoListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "") String filter, FilterPageable filterPageable) {
         return locacaoService.findByPage(filter.toUpperCase(), filterPageable.listByPage());
     }

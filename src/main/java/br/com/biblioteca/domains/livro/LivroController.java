@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -22,13 +24,15 @@ public class LivroController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('LIBCLIVRO')")
     public void removeById(@PathVariable("id") UUID id) {
         livroService.deleteById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Livro> criar(@Valid @RequestBody LivroCriarDTO livroCriarDTO) {
+    @PreAuthorize("hasAuthority('LIBCLIVRO')")
+    public ResponseEntity<Livro> criar(@Valid @RequestBody LivroCriarDTO livroCriarDTO, Authentication authentication) {
         Livro livroSalvo = livroService.criar(livroCriarDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -38,17 +42,20 @@ public class LivroController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('LIBRLIVRO')")
     public LivroByIdDTO findById(@PathVariable("id") UUID id) {
         return livroService.findById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('LIBCLIVRO')")
     public void updateLivro(@PathVariable("id") UUID id, @Valid @RequestBody LivroAtualizarDTO livroAtualizarDTO) {
         livroService.atualizar(livroAtualizarDTO, id);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('LIBRLIVRO')")
     public Page<LivroListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "") String filter, FilterPageable filterPageable) {
         return livroService.findByPage(filter.toUpperCase(), filterPageable.listByPage());
     }

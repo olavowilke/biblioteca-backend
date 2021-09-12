@@ -28,7 +28,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class LocacaoTest extends IntegrationTestConfiguration {
@@ -140,7 +139,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
                 .replace("{{dataLocacao}}", "2021-07-15T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "2030-07-16T14:21:00");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -166,7 +165,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
                 .replace("{{dataLocacao}}", "2021-07-15T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "2030-07-20T14:21:00");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -186,7 +185,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
                 .replace("{{dataLocacao}}", "2021-07-15T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "2030-07-16T14:21:00");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -206,7 +205,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
                 .replace("{{dataLocacao}}", "2021-07-15T14:21:00")
                 .replace("{{dataPrevistaDevolucao}}", "2030-07-16T14:21:00");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -219,7 +218,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroClienteNome_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "cliente.nome")
                 .param("direction", "DESC")
                 .contentType(ContentType.JSON)
@@ -254,7 +253,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroSituacao_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "situacao")
                 .param("direction", "DESC")
                 .contentType(ContentType.JSON)
@@ -289,7 +288,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroDataLocacao_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "dataLocacao")
                 .param("direction", "DESC")
                 .contentType(ContentType.JSON)
@@ -324,7 +323,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroDataDevolucao_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "dataDevolucao")
                 .param("direction", "DESC")
                 .contentType(ContentType.JSON)
@@ -359,7 +358,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroDataPrevistaDevolucao_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "dataPrevistaDevolucao")
                 .param("direction", "DESC")
                 .contentType(ContentType.JSON)
@@ -397,7 +396,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
         String payload = locacaoJsonAtualizar
                 .replace("{{dataDevolucao}}", "2030-07-16T14:21:00");
 
-        given()
+        givenAuthenticated()
                 .pathParam("locacaoId", locacao1Id)
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -420,7 +419,7 @@ public class LocacaoTest extends IntegrationTestConfiguration {
         String payload = locacaoJsonAtualizar
                 .replace("{{dataDevolucao}}", "2030-07-16T14:21:00");
 
-        given()
+        givenAuthenticated()
                 .pathParam("locacaoId", "f989621e-c601-4123-8f3e-fc1ab06a8bff")
                 .body(payload)
                 .contentType(ContentType.JSON)

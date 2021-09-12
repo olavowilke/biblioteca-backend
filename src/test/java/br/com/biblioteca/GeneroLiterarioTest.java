@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class GeneroLiterarioTest extends IntegrationTestConfiguration {
@@ -49,7 +48,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
         String payload = generoLiterarioJson
                 .replace("{{nome}}", "Terror");
 
-        Response response = given()
+        Response response = givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -60,7 +59,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
 
         String id = getIdHeaderLocation(response);
 
-        given()
+        givenAuthenticated()
                 .pathParam("generoLiterarioId", id)
                 .when()
                 .get("/{generoLiterarioId}")
@@ -78,7 +77,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
         String payload = generoLiterarioJson
                 .replace("{{nome}}", "Romance");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -94,7 +93,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
         String payload = generoLiterarioJson
                 .replace("{{nome}}", "Teste para validar quando o nome supera 50 caracteres");
 
-        Response response = given()
+        Response response = givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -110,7 +109,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
         String payload = generoLiterarioJson
                 .replace("{{nome}}", "");
 
-        given()
+        givenAuthenticated()
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -123,7 +122,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
 
     @Test
     public void findById_Retornando404_NOTFOUND_QuandoIdIncorreto() {
-        given()
+        givenAuthenticated()
                 .pathParam("generoLiterarioId", "710a52bf-21bd-496e-9097-a31d58700f59")
                 .when()
                 .get("/{generoLiterarioId}")
@@ -134,7 +133,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
 
     @Test
     public void findByPage_ParametroNome_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .param("orderBy", "nome")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
@@ -160,7 +159,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
         String payload = generoLiterarioJson
                 .replace("{{nome}}", "Terror");
 
-        given()
+        givenAuthenticated()
                 .pathParam("generoLiterarioId", generoLiterario1Id)
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -176,7 +175,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
         String payload = generoLiterarioJson
                 .replace("{{nome}}", "Aventura");
 
-        given()
+        givenAuthenticated()
                 .pathParam("generoLiterarioId", generoLiterario1Id)
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -193,7 +192,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
         String payload = generoLiterarioJson
                 .replace("{{nome}}", "Romance");
 
-        given()
+        givenAuthenticated()
                 .pathParam("generoLiterarioId", generoLiterario1Id)
                 .body(payload)
                 .contentType(ContentType.JSON)
@@ -206,7 +205,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
 
     @Test
     public void dropdown_Retornando200OK() {
-        given()
+        givenAuthenticated()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
@@ -225,7 +224,7 @@ public class GeneroLiterarioTest extends IntegrationTestConfiguration {
 
     @Test
     public void deletar_Retornando204() {
-        given()
+        givenAuthenticated()
                 .pathParam("generoLiterarioId", generoLiterario1Id)
                 .when()
                 .delete("/{generoLiterarioId}")

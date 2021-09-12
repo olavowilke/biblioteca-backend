@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,6 +27,7 @@ public class GeneroLiterarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('LIBCGENLIT')")
     public ResponseEntity<GeneroLiterario> criar(
             @Valid @RequestBody GeneroLiterarioCriarAtualizarDTO generoLiterarioCriarDTO) {
         GeneroLiterario generoLiterarioSalvo = generoLiterarioService.criar(generoLiterarioCriarDTO);
@@ -38,6 +40,7 @@ public class GeneroLiterarioController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('LIBCGENLIT')")
     public void update(
             @PathVariable("id") UUID id,
             @Valid @RequestBody GeneroLiterarioCriarAtualizarDTO generoLiterarioAtualizarDTO) {
@@ -45,23 +48,27 @@ public class GeneroLiterarioController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('LIBRGENLIT')")
     public GeneroLiterarioByIdDTO findById(@PathVariable("id") UUID id) {
         return generoLiterarioService.findById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('LIBCGENLIT')")
     public void delete(@PathVariable("id") UUID id) {
         generoLiterarioService.delete(id);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('LIBRGENLIT')")
     public Page<GeneroLiterarioListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "")
                                                             String filter, FilterPageable filterPageable) {
         return generoLiterarioService.findByPage(filter.toUpperCase(), filterPageable.listByPage());
     }
 
     @GetMapping("/dropdown")
+    @PreAuthorize("hasAuthority('LIBRGENLIT')")
     public List<DropdownDTO> findForDropdown() {
         return generoLiterarioService.findForDropdown();
     }
