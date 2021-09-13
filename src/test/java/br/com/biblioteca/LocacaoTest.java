@@ -93,11 +93,11 @@ public class LocacaoTest extends IntegrationTestConfiguration {
         this.cliente2Id = cliente2.getId().toString();
 
         this.livro1 = new Livro("O triste fim de Policarpo Quaresma", LocalDate.of(1915, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
-        this.livro2 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
-        this.livro3 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
-        this.livro4 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
-        this.livro5 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
-        this.livro6 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
+        this.livro2 = new Livro("Clean Code", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
+        this.livro3 = new Livro("Clean Code", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
+        this.livro4 = new Livro("Clean Code", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
+        this.livro5 = new Livro("Clean Code", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
+        this.livro6 = new Livro("Clean Code", LocalDate.of(2018, 1, 1), editora1, generoLiterario1, "28172874989", autor1);
         this.livro1Id = livro1.getId().toString();
         this.livro2Id = livro2.getId().toString();
         this.livro3Id = livro3.getId().toString();

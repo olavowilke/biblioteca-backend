@@ -1,7 +1,7 @@
 INSERT INTO tb_user (id, name, email, password)
 VALUES ('8d0d8540-7563-4b75-9bfd-691db0b58007', 'admin', 'admin@biblioteca.com',
-        '$2a$12$7FEPnTtwKu9FxEjcoMFEb.yKltLugu26GURsT6cQD5UkeyVFbT3gW'),
-       ('544055fe-f15c-4e0c-9686-0baefa71c801', 'user', 'user@biblioteca.com',
+        '$2a$12$7FEPnTtwKu9FxEjcoMFEb.yKltLugu26GURsT6cQD5UkeyVFbT3gW'),--password: biblioteca@123
+       ('544055fe-f15c-4e0c-9686-0baefa71c801', 'user', 'user@biblioteca.com',--password: biblioteca@123
         '$2a$12$7FEPnTtwKu9FxEjcoMFEb.yKltLugu26GURsT6cQD5UkeyVFbT3gW') ON CONFLICT DO NOTHING;
 
 INSERT INTO tb_authority (id, code, description)
