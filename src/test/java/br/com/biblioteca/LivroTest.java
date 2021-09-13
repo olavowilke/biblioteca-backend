@@ -77,7 +77,7 @@ public class LivroTest extends IntegrationTestConfiguration {
         this.editora2Id = editora2.getId().toString();
 
         this.livro1 = new Livro("O triste fim de Policarpo Quaresma", LocalDate.of(1915, 1, 1), editora1, generoLiterario1, "123456789111", autor1);
-        this.livro2 = new Livro("O triste fim da minha ereção", LocalDate.of(2018, 1, 1), editora2, generoLiterario2, "123456789112", autor2);
+        this.livro2 = new Livro("Clean Code", LocalDate.of(2018, 1, 1), editora2, generoLiterario2, "123456789112", autor2);
         this.livro1Id = livro1.getId().toString();
         this.livro2Id = livro2.getId().toString();
 
@@ -114,7 +114,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("editoraId"))
                 .body("$", hasKey("quantidadeDisponivel"))
                 .body("id", is(livro2Id))
-                .body("titulo", is("O triste fim da minha ereção"))
+                .body("titulo", is("Clean Code"))
                 .body("dataPublicacao", is("2018-01-01"))
                 .body("isbn", is("123456789112"))
                 .body("generoLiterarioId", is(generoLiterario2Id))
@@ -147,7 +147,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("autorNome"))
                 .body("$", hasKey("isbn"))
                 .body("id", is(livro2Id))
-                .body("titulo", is("O triste fim da minha ereção"))
+                .body("titulo", is("Clean Code"))
                 .body("autorNome", is("Olavo Wilke"))
                 .body("isbn", is("123456789112"))
                 .statusCode(HttpStatus.OK.value());
@@ -169,7 +169,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .replace("{{autorId}}", autor2Id)
                 .replace("{{editoraId}}", editora2Id)
                 .replace("{{generoLiterarioId}}", generoLiterario2Id)
-                .replace("{{titulo}}", "O triste fim da minha ereção")
+                .replace("{{titulo}}", "Clean Code")
                 .replace("{{dataPublicacao}}", "2018-01-01")
                 .replace("{{isbn}}", "123456789111")
                 .replace("{{quantidadeDisponivel}}", "10");
@@ -199,7 +199,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("editoraId"))
                 .body("$", hasKey("quantidadeDisponivel"))
                 .body("id", is(id))
-                .body("titulo", is("O triste fim da minha ereção"))
+                .body("titulo", is("Clean Code"))
                 .body("dataPublicacao", is("2018-01-01"))
                 .body("isbn", is("123456789111"))
                 .body("generoLiterarioId", is(generoLiterario2Id))
@@ -225,7 +225,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .replace("{{autorId}}", autor2Id)
                 .replace("{{editoraId}}", editora2Id)
                 .replace("{{generoLiterarioId}}", generoLiterario2Id)
-                .replace("{{titulo}}", "O triste fim da minha ereção")
+                .replace("{{titulo}}", "Clean Code")
                 .replace("{{dataPublicacao}}", "2018-01-01")
                 .replace("{{isbn}}", "123456789123");
 
@@ -253,7 +253,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("$", hasKey("editoraId"))
                 .body("$", hasKey("quantidadeDisponivel"))
                 .body("id", is(livro2Id))
-                .body("titulo", is("O triste fim da minha ereção"))
+                .body("titulo", is("Clean Code"))
                 .body("dataPublicacao", is("2018-01-01"))
                 .body("isbn", is("123456789123"))
                 .body("generoLiterarioId", is(generoLiterario2Id))
@@ -304,7 +304,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("editoraNome")))
                 .body("content[0].size()", is(7))
                 .body("content[0].id", is(livro2Id))
-                .body("content[0].titulo", is("O triste fim da minha ereção"))
+                .body("content[0].titulo", is("Clean Code"))
                 .body("content[0].dataPublicacao", is("2018-01-01"))
                 .body("content[0].isbn", is("123456789112"))
                 .body("content[0].generoLiterarioNome", is("Aventura"))
@@ -350,7 +350,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[0].editoraNome", is("Panini"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro2Id))
-                .body("content[1].titulo", is("O triste fim da minha ereção"))
+                .body("content[1].titulo", is("Clean Code"))
                 .body("content[1].dataPublicacao", is("2018-01-01"))
                 .body("content[1].generoLiterarioNome", is("Aventura"))
                 .body("content[1].isbn", is("123456789112"))
@@ -380,7 +380,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content", everyItem(hasKey("editoraNome")))
                 .body("content[0].size()", is(7))
                 .body("content[0].id", is(livro2Id))
-                .body("content[0].titulo", is("O triste fim da minha ereção"))
+                .body("content[0].titulo", is("Clean Code"))
                 .body("content[0].dataPublicacao", is("2018-01-01"))
                 .body("content[0].generoLiterarioNome", is("Aventura"))
                 .body("content[0].isbn", is("123456789112"))
@@ -426,7 +426,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[0].editoraNome", is("Panini"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro2Id))
-                .body("content[1].titulo", is("O triste fim da minha ereção"))
+                .body("content[1].titulo", is("Clean Code"))
                 .body("content[1].dataPublicacao", is("2018-01-01"))
                 .body("content[1].generoLiterarioNome", is("Aventura"))
                 .body("content[1].isbn", is("123456789112"))
@@ -464,7 +464,7 @@ public class LivroTest extends IntegrationTestConfiguration {
                 .body("content[0].autorNome", is("Lima Barreto"))
                 .body("content[1].size()", is(7))
                 .body("content[1].id", is(livro2Id))
-                .body("content[1].titulo", is("O triste fim da minha ereção"))
+                .body("content[1].titulo", is("Clean Code"))
                 .body("content[1].dataPublicacao", is("2018-01-01"))
                 .body("content[1].generoLiterarioNome", is("Aventura"))
                 .body("content[1].isbn", is("123456789112"))
