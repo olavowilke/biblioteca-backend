@@ -4,10 +4,6 @@ This project was done for studying purposes.
 
 The application's back-end was done with Java + Spring, I also used docker to provide a instance of Postgres.
 
-This app also has a front-end, which is available at [Leo's github](https://github.com/leonardo-earruda).
-
-[Pietro](https://github.com/pietroow) guided us during the project, applying agile methods and reviewing all the code wrote.
-
 ## What You Need
 * Java 11
 * Maven
